@@ -56,16 +56,18 @@ class _CommandManagerPageState extends State<CommandManagerPage> {
   }
 
   Future<void> _runCommand(CommandAction action) async {
-    for (var cmd in action.commands) {
-      try {
-        final result = await Process.run(
-          Platform.isWindows ? 'cmd.exe' : 'bash',
-          Platform.isWindows ? ['/c', cmd] : ['-c', cmd],
-        );
-        debugPrint('[${action.name}] $cmd -> ${result.stdout}');
-      } catch (e) {
-        debugPrint('Error running $cmd: $e');
+    try {
+      final fullCommand = action.commands.join(' ; ');
+      final result = await Process.run(
+        'powershell.exe',
+        ['-Command', fullCommand],
+      );
+      debugPrint('[${action.name}] → ${result.stdout}');
+      if (result.stderr != null && result.stderr.toString().trim().isNotEmpty) {
+        debugPrint('stderr: ${result.stderr}');
       }
+    } catch (e) {
+      debugPrint('Error running command: $e');
     }
   }
 
