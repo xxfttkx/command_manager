@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:command_manager/models/running_command.dart';
 import 'package:flutter/foundation.dart';
 import '../models/command_action.dart';
 import '../services/config_storage.dart';
@@ -10,6 +12,10 @@ class CommandManagerViewModel extends ChangeNotifier {
 
   String _filter = '';
   String get filter => _filter;
+
+  final List<RunningCommand> _running = [];
+
+  List<RunningCommand> get runningCommands => List.unmodifiable(_running);
 
   void setFilter(String value) {
     _filter = value;
@@ -62,16 +68,52 @@ class CommandManagerViewModel extends ChangeNotifier {
   Future<void> runCommand(CommandAction action) async {
     try {
       final fullCommand = action.commands.join(' ; ');
-      final result = await Process.run(
+      final process = await Process.start(
         'powershell.exe',
         ['-Command', fullCommand],
       );
-      debugPrint('[${action.name}] → ${result.stdout}');
-      if (result.stderr != null && result.stderr.toString().trim().isNotEmpty) {
-        debugPrint('stderr: ${result.stderr}');
-      }
+
+      final rc = RunningCommand(
+        pid: process.pid,
+        name: action.name,
+        process: process,
+        startTime: DateTime.now(),
+      );
+      _running.add(rc);
+      notifyListeners();
+
+      process.stdout.transform(utf8.decoder).listen((line) {
+        rc.output.write(line);
+        notifyListeners();
+      });
+
+      process.stderr.transform(utf8.decoder).listen((line) {
+        rc.output.write('[stderr] $line');
+        notifyListeners();
+      });
+
+      await process.exitCode;
+      _running.removeWhere((p) => p.pid == process.pid);
+      notifyListeners();
     } catch (e) {
       debugPrint('Error running command: $e');
     }
+  }
+
+  void killProcess(int pid) async {
+    final target = _running.firstWhere(
+      (p) => p.pid == pid,
+      orElse: () => throw Exception('Process not found'),
+    );
+
+    // 用 taskkill 杀整个进程树（包括 powershell 启动的子进程）
+    await Process.run(
+      'taskkill',
+      ['/PID', '$pid', '/T', '/F'],
+    );
+
+    // 从追踪列表中移除
+    _running.remove(target);
+    notifyListeners();
   }
 }

@@ -1,3 +1,4 @@
+import 'package:command_manager/pages/running_commands_page.dart';
 import 'package:command_manager/viewmodels/command_manager_viewmodel.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
@@ -78,6 +79,12 @@ class _MyHomePageState extends State<MyHomePage> {
       case 2:
         page = CommandManagerPage();
         break;
+      case 3:
+        page = RunningCommandsPage();
+        break;
+      case 4:
+        page = RunningCommandsPage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -98,8 +105,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     label: Text('Favorites'),
                   ),
                   NavigationRailDestination(
-                    icon: Icon(Icons.edit),
+                    icon: Icon(Icons.terminal),
                     label: Text('Command Manager'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.play_circle),
+                    label: Text('Running Commands'),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.settings),
+                    label: Text('Settings'),
                   ),
                 ],
                 selectedIndex: selectedIndex,
