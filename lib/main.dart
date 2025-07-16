@@ -1,11 +1,17 @@
+import 'package:command_manager/viewmodels/command_manager_viewmodel.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:command_manager/command_manager_page.dart';
+import 'package:command_manager/pages/command_manager_page.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => CommandManagerViewModel(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -19,6 +25,7 @@ class MyApp extends StatelessWidget {
         title: 'command_manager',
         theme: ThemeData(
           useMaterial3: true,
+          fontFamily: 'NotoSansSC', // 设置全局字体
           colorScheme: ColorScheme.fromSeed(
               seedColor: const Color.fromARGB(255, 21, 255, 25)),
         ),
