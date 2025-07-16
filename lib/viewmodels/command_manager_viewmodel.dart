@@ -8,6 +8,22 @@ class CommandManagerViewModel extends ChangeNotifier {
 
   List<CommandAction> get commands => List.unmodifiable(_commands);
 
+  String _filter = '';
+  String get filter => _filter;
+
+  void setFilter(String value) {
+    _filter = value;
+    notifyListeners();
+  }
+
+  List<CommandAction> get filteredCommands {
+    if (_filter.isEmpty) return _commands;
+    return _commands.where((c) {
+      return c.name.contains(_filter) ||
+          c.commands.any((cmd) => cmd.contains(_filter));
+    }).toList();
+  }
+
   Future<void> loadCommands() async {
     final list = await ConfigStorage.loadCommands();
     _commands = list;

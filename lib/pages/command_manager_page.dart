@@ -39,43 +39,59 @@ class _CommandManagerPageState extends State<CommandManagerPage> {
   @override
   Widget build(BuildContext context) {
     final vm = context.watch<CommandManagerViewModel>();
-    final commands = vm.commands;
+    final commands = vm.filteredCommands;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('命令映射管理器'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: '重新加载配置',
-            onPressed: () => vm.loadCommands(),
+      // appBar: AppBar(
+      //   title: const Text('命令映射管理器'),
+      //   actions: [
+      //     IconButton(
+      //       icon: const Icon(Icons.refresh),
+      //       tooltip: '重新加载配置',
+      //       onPressed: () => vm.loadCommands(),
+      //     ),
+      //   ],
+      // ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              decoration: const InputDecoration(
+                hintText: '搜索命令名或内容',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(),
+              ),
+              onChanged: vm.setFilter,
+            ),
+          ),
+          Expanded(
+            child: commands.isEmpty
+                ? const Center(child: Text('无匹配命令'))
+                : ReorderableListView.builder(
+                    itemCount: commands.length,
+                    onReorder: (oldIndex, newIndex) {
+                      vm.reorder(oldIndex, newIndex);
+                    },
+                    proxyDecorator: (child, index, animation) => Material(
+                      child: child,
+                    ),
+                    itemBuilder: (context, index) {
+                      final action = commands[index];
+                      return KeyedSubtree(
+                        key: ValueKey(action.name),
+                        child: CommandCard(
+                          action: action,
+                          onEdit: () => _openEditor(initial: action),
+                          onDelete: () => vm.deleteCommand(action),
+                          onRun: () => vm.runCommand(action),
+                        ),
+                      );
+                    },
+                  ),
           ),
         ],
       ),
-      body: commands.isEmpty
-          ? const Center(child: Text('暂无命令，点击 + 添加'))
-          : ReorderableListView.builder(
-              itemCount: commands.length,
-              onReorder: (oldIndex, newIndex) {
-                vm.reorder(oldIndex, newIndex);
-              },
-              proxyDecorator: (child, index, animation) => Material(
-                child: child,
-              ),
-              itemBuilder: (context, index) {
-                final action = commands[index];
-                return KeyedSubtree(
-                  // 或者 ListTile 直接设置 key 也可以
-                  key: ValueKey(action.name), // 必须有 key，否则会报错或顺序错乱
-                  child: CommandCard(
-                    action: action,
-                    onEdit: () => _openEditor(initial: action),
-                    onDelete: () => vm.deleteCommand(action),
-                    onRun: () => vm.runCommand(action),
-                  ),
-                );
-              },
-            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _openEditor(),
         tooltip: '添加命令',
