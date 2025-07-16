@@ -33,6 +33,16 @@ class CommandManagerViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void reorder(int oldIndex, int newIndex) {
+    if (newIndex > oldIndex) newIndex--; // ReorderableListView 的特殊行为
+
+    final item = _commands.removeAt(oldIndex);
+    _commands.insert(newIndex, item);
+
+    ConfigStorage.saveCommands(_commands);
+    notifyListeners();
+  }
+
   Future<void> runCommand(CommandAction action) async {
     try {
       final fullCommand = action.commands.join(' ; ');

@@ -54,22 +54,32 @@ class _CommandManagerPageState extends State<CommandManagerPage> {
       ),
       body: commands.isEmpty
           ? const Center(child: Text('暂无命令，点击 + 添加'))
-          : ListView.builder(
+          : ReorderableListView.builder(
               itemCount: commands.length,
+              onReorder: (oldIndex, newIndex) {
+                vm.reorder(oldIndex, newIndex);
+              },
+              proxyDecorator: (child, index, animation) => Material(
+                child: child,
+              ),
               itemBuilder: (context, index) {
                 final action = commands[index];
-                return CommandCard(
-                  action: action,
-                  onEdit: () => _openEditor(initial: action),
-                  onDelete: () => vm.deleteCommand(action),
-                  onRun: () => vm.runCommand(action),
+                return KeyedSubtree(
+                  // 或者 ListTile 直接设置 key 也可以
+                  key: ValueKey(action.name), // 必须有 key，否则会报错或顺序错乱
+                  child: CommandCard(
+                    action: action,
+                    onEdit: () => _openEditor(initial: action),
+                    onDelete: () => vm.deleteCommand(action),
+                    onRun: () => vm.runCommand(action),
+                  ),
                 );
               },
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _openEditor(),
-        child: const Icon(Icons.add),
         tooltip: '添加命令',
+        child: const Icon(Icons.add),
       ),
     );
   }
