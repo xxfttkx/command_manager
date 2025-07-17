@@ -1,9 +1,7 @@
 import 'package:command_manager/pages/running_commands_page.dart';
-import 'package:command_manager/viewmodels/command_manager_viewmodel.dart';
-import 'package:english_words/english_words.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:command_manager/pages/command_manager_page.dart';
+import 'package:command_manager/viewmodels/command_manager_viewmodel.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -14,6 +12,9 @@ void main() {
     ),
   );
 }
+
+final GlobalKey<NavigatorState> nestedNavigatorKey =
+    GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -26,217 +27,70 @@ class MyApp extends StatelessWidget {
         title: 'command_manager',
         theme: ThemeData(
           useMaterial3: true,
-          fontFamily: 'NotoSansSC', // 设置全局字体
+          fontFamily: 'NotoSansSC',
           colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(255, 21, 255, 25)),
+            seedColor: const Color.fromARGB(255, 21, 255, 25),
+          ),
         ),
-        home: MyHomePage(),
+        home: const HomePage(),
       ),
     );
   }
 }
 
-class MyAppState extends ChangeNotifier {
-  var current = WordPair.random();
-  void getNext() {
-    current = WordPair.random();
-    notifyListeners();
-  }
+class MyAppState extends ChangeNotifier {}
 
-  var favorites = <WordPair>[];
-
-  void toggleFavorite() {
-    if (favorites.contains(current)) {
-      favorites.remove(current);
-    } else {
-      favorites.add(current);
-    }
-    notifyListeners();
-  }
-}
-
-// ...
-
-// ...
-
-class MyHomePage extends StatefulWidget {
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  var selectedIndex = 0;
+class _HomePageState extends State<HomePage> {
+  int currentIndex = 0; // 当前选中的索引
+  final List<Widget> pages = const [
+    CommandManagerPage(),
+    RunningCommandsPage(),
+    Placeholder(), // Settings
+  ];
+
   @override
   Widget build(BuildContext context) {
-    Widget page;
-    switch (selectedIndex) {
-      case 0:
-        page = GeneratorPage();
-        break;
-      case 1:
-        page = FavoritesPage();
-        break;
-      case 2:
-        page = CommandManagerPage();
-        break;
-      case 3:
-        page = RunningCommandsPage();
-        break;
-      case 4:
-        page = RunningCommandsPage();
-        break;
-      default:
-        throw UnimplementedError('no widget for $selectedIndex');
-    }
-    return LayoutBuilder(builder: (context, constraints) {
-      return Scaffold(
-        body: Row(
-          children: [
-            SafeArea(
-              child: NavigationRail(
-                extended: constraints.maxWidth >= 600, // ← Here.
-                destinations: [
-                  NavigationRailDestination(
-                    icon: Icon(Icons.home),
-                    label: Text('Home'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.favorite),
-                    label: Text('Favorites'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.terminal),
-                    label: Text('Command Manager'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.play_circle),
-                    label: Text('Running Commands'),
-                  ),
-                  NavigationRailDestination(
-                    icon: Icon(Icons.settings),
-                    label: Text('Settings'),
-                  ),
-                ],
-                selectedIndex: selectedIndex,
-                onDestinationSelected: (value) {
-                  setState(() {
-                    selectedIndex = value;
-                  });
-                  print('selected: $value');
-                },
-              ),
-            ),
-            Expanded(
-              child: Container(
-                color: Theme.of(context).colorScheme.primaryContainer,
-                child: page,
-              ),
-            ),
-          ],
-        ),
-      );
-    });
-  }
-}
-
-class GeneratorPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var pair = appState.current;
-
-    IconData icon;
-    if (appState.favorites.contains(pair)) {
-      icon = Icons.favorite;
-    } else {
-      icon = Icons.favorite_border;
-    }
-
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+    return Scaffold(
+      body: Row(
         children: [
-          BigCard(pair: pair),
-          SizedBox(height: 10),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  appState.toggleFavorite();
-                },
-                icon: Icon(icon),
-                label: Text('Like'),
+          NavigationRail(
+            selectedIndex: currentIndex,
+            onDestinationSelected: (index) {
+              if (index == currentIndex) return;
+              setState(() {
+                currentIndex = index;
+              });
+            },
+            destinations: const [
+              NavigationRailDestination(
+                icon: Icon(Icons.terminal),
+                label: Text('Command Manager'),
               ),
-              SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  appState.getNext();
-                },
-                child: Text('Next'),
+              NavigationRailDestination(
+                icon: Icon(Icons.play_arrow),
+                label: Text('Running'),
+              ),
+              NavigationRailDestination(
+                icon: Icon(Icons.settings),
+                label: Text('Settings'),
               ),
             ],
           ),
+          const VerticalDivider(thickness: 1, width: 1),
+          Expanded(
+            child: IndexedStack(
+              index: currentIndex,
+              children: pages,
+            ),
+          ),
         ],
       ),
-    );
-  }
-}
-
-// ...
-
-// ...
-
-class BigCard extends StatelessWidget {
-  const BigCard({
-    super.key,
-    required this.pair,
-  });
-
-  final WordPair pair;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final style = theme.textTheme.displayMedium!.copyWith(
-      color: theme.colorScheme.onPrimary,
-    );
-    return Card(
-      color: theme.colorScheme.primary,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Text(pair.asLowerCase, style: style),
-      ),
-    );
-  }
-}
-
-// ...
-
-class FavoritesPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-
-    if (appState.favorites.isEmpty) {
-      return Center(
-        child: Text('No favorites yet.'),
-      );
-    }
-
-    return ListView(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(20),
-          child: Text('You have '
-              '${appState.favorites.length} favorites:'),
-        ),
-        for (var pair in appState.favorites)
-          ListTile(
-            leading: Icon(Icons.favorite),
-            title: Text(pair.asLowerCase),
-          ),
-      ],
     );
   }
 }
