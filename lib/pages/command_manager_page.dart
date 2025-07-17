@@ -1,3 +1,4 @@
+import 'package:command_manager/widgets/app_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -30,7 +31,22 @@ class _CommandManagerPageState extends State<CommandManagerPage> {
         initialData: initial,
         onSubmit: (updated) {
           final vm = context.read<CommandManagerViewModel>();
-          vm.addOrUpdateCommand(updated, original: initial);
+          final result = vm.addOrUpdateCommand(updated, original: initial);
+          switch (result) {
+            case AddCommandResult.success:
+              AppSnackbar.show(
+                context,
+                'Command "${updated.name}" saved successfully.',
+              );
+              break;
+            case AddCommandResult.duplicate:
+              AppSnackbar.showError(context,
+                  'Another command with name "${updated.name}" already exists.');
+              break;
+            default:
+              break;
+          }
+          return result == AddCommandResult.success;
         },
       ),
     );
@@ -83,7 +99,38 @@ class _CommandManagerPageState extends State<CommandManagerPage> {
                         child: CommandCard(
                           action: action,
                           onEdit: () => _openEditor(initial: action),
-                          onDelete: () => vm.deleteCommand(action),
+                          onDelete: () async {
+                            final confirmed = await showDialog<bool>(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                title: const Text('确认删除'),
+                                content: const Text('你确定要删除这个命令吗？此操作无法撤销。'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.of(ctx).pop(false),
+                                    child: const Text('取消'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.of(ctx).pop(true),
+                                    child: const Text('删除',
+                                        style: TextStyle(color: Colors.red)),
+                                  ),
+                                ],
+                              ),
+                            );
+
+                            if (confirmed == true && context.mounted) {
+                              vm.deleteCommand(action); // 执行删除操作
+
+                              // 弹出删除成功的提示
+                              AppSnackbar.show(
+                                context,
+                                '命令 "${action.name}" 已成功删除。',
+                              );
+                            }
+                          },
                           onRun: () => vm.runCommand(action),
                         ),
                       );

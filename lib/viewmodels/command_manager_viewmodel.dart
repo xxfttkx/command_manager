@@ -2,8 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:command_manager/models/running_command.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import '../models/command_action.dart';
 import '../services/config_storage.dart';
+
+enum AddCommandResult {
+  success,
+  duplicate,
+}
 
 class CommandManagerViewModel extends ChangeNotifier {
   List<CommandAction> _commands = [];
@@ -36,26 +42,29 @@ class CommandManagerViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addOrUpdateCommand(CommandAction updated, {CommandAction? original}) {
+  AddCommandResult addOrUpdateCommand(CommandAction updated,
+      {CommandAction? original}) {
     if (original != null) {
-      updateCommand(updated, original);
+      return updateCommand(updated, original);
     } else {
-      addCommand(updated);
+      return addCommand(updated);
     }
   }
 
-  void addCommand(CommandAction newCommand) {
+  AddCommandResult addCommand(CommandAction newCommand) {
     final exists = _commands.any((cmd) => cmd.name == newCommand.name);
     if (exists) {
-      throw Exception('Command with name "${newCommand.name}" already exists.');
+      return AddCommandResult.duplicate;
     }
 
     _commands.add(newCommand);
     ConfigStorage.saveCommands(_commands);
     notifyListeners();
+    return AddCommandResult.success;
   }
 
-  void updateCommand(CommandAction updated, CommandAction original) {
+  AddCommandResult updateCommand(
+      CommandAction updated, CommandAction original) {
     final index = _commands.indexOf(original);
     if (index == -1) {
       throw Exception('Original command not found.');
@@ -64,13 +73,13 @@ class CommandManagerViewModel extends ChangeNotifier {
     if (updated.name != original.name) {
       final nameExists = _commands.any((cmd) => cmd.name == updated.name);
       if (nameExists) {
-        throw Exception(
-            'Another command with name "${updated.name}" already exists.');
+        return AddCommandResult.duplicate;
       }
     }
     _commands[index] = updated;
     ConfigStorage.saveCommands(_commands);
     notifyListeners();
+    return AddCommandResult.success;
   }
 
   void deleteCommand(CommandAction action) {

@@ -3,7 +3,7 @@ import '../models/command_action.dart';
 
 class CommandEditor extends StatefulWidget {
   final CommandAction? initialData;
-  final void Function(CommandAction) onSubmit;
+  final bool Function(CommandAction) onSubmit;
 
   const CommandEditor({
     super.key,
@@ -56,11 +56,11 @@ class _CommandEditorState extends State<CommandEditor> {
       return;
     }
 
-    widget.onSubmit(
+    if (widget.onSubmit(
       CommandAction(name: name, description: desc, commands: commands),
-    );
-
-    Navigator.of(context).pop(); // 关闭弹窗
+    )) {
+      Navigator.of(context).pop(); // 关闭弹窗
+    }
   }
 
   @override
