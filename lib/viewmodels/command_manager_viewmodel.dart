@@ -38,13 +38,37 @@ class CommandManagerViewModel extends ChangeNotifier {
 
   void addOrUpdateCommand(CommandAction updated, {CommandAction? original}) {
     if (original != null) {
-      final index = _commands.indexOf(original);
-      if (index != -1) {
-        _commands[index] = updated;
-      }
+      updateCommand(updated, original);
     } else {
-      _commands.add(updated);
+      addCommand(updated);
     }
+  }
+
+  void addCommand(CommandAction newCommand) {
+    final exists = _commands.any((cmd) => cmd.name == newCommand.name);
+    if (exists) {
+      throw Exception('Command with name "${newCommand.name}" already exists.');
+    }
+
+    _commands.add(newCommand);
+    ConfigStorage.saveCommands(_commands);
+    notifyListeners();
+  }
+
+  void updateCommand(CommandAction updated, CommandAction original) {
+    final index = _commands.indexOf(original);
+    if (index == -1) {
+      throw Exception('Original command not found.');
+    }
+
+    if (updated.name != original.name) {
+      final nameExists = _commands.any((cmd) => cmd.name == updated.name);
+      if (nameExists) {
+        throw Exception(
+            'Another command with name "${updated.name}" already exists.');
+      }
+    }
+    _commands[index] = updated;
     ConfigStorage.saveCommands(_commands);
     notifyListeners();
   }
