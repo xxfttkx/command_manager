@@ -23,6 +23,11 @@ class CommandManagerViewModel extends ChangeNotifier {
 
   List<RunningCommand> get runningCommands => List.unmodifiable(_running);
 
+  List<RunningCommand> _finishedCommands = [];
+
+  List<RunningCommand> get finishedCommands =>
+      List.unmodifiable(_finishedCommands);
+
   void setFilter(String value) {
     _filter = value;
     notifyListeners();
@@ -98,6 +103,14 @@ class CommandManagerViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> runCommandByName(String name) async {
+    final action = _commands.firstWhere(
+      (cmd) => cmd.name == name,
+      orElse: () => throw Exception('Command not found: $name'),
+    );
+    await runCommand(action);
+  }
+
   Future<void> runCommand(CommandAction action) async {
     try {
       final fullCommand = action.commands.join(' ; ');
@@ -126,6 +139,7 @@ class CommandManagerViewModel extends ChangeNotifier {
       });
 
       await process.exitCode;
+      _finishedCommands.add(rc);
       _running.removeWhere((p) => p.pid == process.pid);
       notifyListeners();
     } catch (e) {

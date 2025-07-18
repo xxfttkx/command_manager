@@ -92,6 +92,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noRunningCommands => 'No running commands';
 
   @override
+  String get finishedCommands => 'Finished Commands';
+
+  @override
+  String get noFinishedCommands => 'No finished commands';
+
+  @override
   String get startTime => 'Start Time';
 
   @override

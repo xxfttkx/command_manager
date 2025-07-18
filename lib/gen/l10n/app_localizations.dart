@@ -242,6 +242,18 @@ abstract class AppLocalizations {
   /// **'No running commands'**
   String get noRunningCommands;
 
+  /// No description provided for @finishedCommands.
+  ///
+  /// In en, this message translates to:
+  /// **'Finished Commands'**
+  String get finishedCommands;
+
+  /// No description provided for @noFinishedCommands.
+  ///
+  /// In en, this message translates to:
+  /// **'No finished commands'**
+  String get noFinishedCommands;
+
   /// No description provided for @startTime.
   ///
   /// In en, this message translates to:

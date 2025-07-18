@@ -79,6 +79,8 @@
   "delete": "Delete",
   "runningCommands": "Running Commands",
   "noRunningCommands": "No running commands",
+  "finishedCommands": "Finished Commands",
+  "noFinishedCommands": "No finished commands",
   "startTime": "Start Time",
   "terminateProcess": "Terminate Process",
   "tabSettings": "Settings",

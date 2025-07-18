@@ -91,6 +91,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get noRunningCommands => '暂无正在运行的命令';
 
   @override
+  String get finishedCommands => '已完成的命令';
+
+  @override
+  String get noFinishedCommands => '暂无已完成的命令';
+
+  @override
   String get startTime => '启动时间';
 
   @override

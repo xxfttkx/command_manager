@@ -26,6 +26,8 @@
   "delete": "删除",
   "runningCommands": "正在运行的命令",
   "noRunningCommands": "暂无正在运行的命令",
+  "finishedCommands": "已完成的命令",
+  "noFinishedCommands": "暂无已完成的命令",
   "startTime": "启动时间",
   "terminateProcess": "终止进程",
   "tabSettings": "设置",

@@ -1,4 +1,5 @@
 import 'package:command_manager/gen/l10n/app_localizations.dart';
+import 'package:command_manager/pages/finished_commands_page.dart';
 import 'package:command_manager/pages/running_commands_page.dart';
 import 'package:command_manager/pages/command_manager_page.dart';
 import 'package:command_manager/pages/settings_page.dart';
@@ -70,6 +71,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> pages = const [
     CommandManagerPage(),
     RunningCommandsPage(),
+    FinishedCommandsPage(),
     SettingsPage(), // Settings
   ];
 
@@ -94,6 +96,10 @@ class _HomePageState extends State<HomePage> {
               NavigationRailDestination(
                 icon: Icon(Icons.play_arrow),
                 label: Text('Running'),
+              ),
+              NavigationRailDestination(
+                icon: Icon(Icons.done),
+                label: Text('Finished'),
               ),
               NavigationRailDestination(
                 icon: Icon(Icons.settings),
