@@ -5,7 +5,7 @@ class AppSnackbar {
     _showSnackBar(
       context,
       message,
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor: Theme.of(context).colorScheme.primary,
     );
   }
 

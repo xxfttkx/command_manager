@@ -12,6 +12,36 @@ class AppLocalizationsZh extends AppLocalizations {
   String get appTitle => '命令管理器';
 
   @override
+  String get addCommand => '新增命令';
+
+  @override
+  String get editCommand => '编辑命令';
+
+  @override
+  String get nameLabel => '名称';
+
+  @override
+  String get descriptionLabel => '描述';
+
+  @override
+  String get commandsLabel => '命令（每行一条）';
+
+  @override
+  String get cancel => '取消';
+
+  @override
+  String get save => '保存';
+
+  @override
+  String get nameAndCommandsRequired => '名称和命令不能为空';
+
+  @override
+  String get searchCommand => '搜索命令名或内容';
+
+  @override
+  String get noMatchedCommand => '无匹配命令';
+
+  @override
   String get run => '运行';
 
   @override

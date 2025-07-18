@@ -12,6 +12,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'Command Manager';
 
   @override
+  String get addCommand => 'Add Command';
+
+  @override
+  String get editCommand => 'Edit Command';
+
+  @override
+  String get nameLabel => 'Name';
+
+  @override
+  String get descriptionLabel => 'Description';
+
+  @override
+  String get commandsLabel => 'Commands (one per line)';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get nameAndCommandsRequired => 'Name and commands cannot be empty';
+
+  @override
+  String get searchCommand => 'Search command name or content';
+
+  @override
+  String get noMatchedCommand => 'No matched command';
+
+  @override
   String get run => 'Run';
 
   @override

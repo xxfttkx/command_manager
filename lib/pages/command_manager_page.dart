@@ -1,3 +1,4 @@
+import 'package:command_manager/gen/l10n/app_localizations.dart';
 import 'package:command_manager/widgets/app_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -73,8 +74,8 @@ class _CommandManagerPageState extends State<CommandManagerPage> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
-              decoration: const InputDecoration(
-                hintText: '搜索命令名或内容',
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.searchCommand,
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
               ),
@@ -83,7 +84,8 @@ class _CommandManagerPageState extends State<CommandManagerPage> {
           ),
           Expanded(
             child: commands.isEmpty
-                ? const Center(child: Text('无匹配命令'))
+                ? Center(
+                    child: Text(AppLocalizations.of(context)!.noMatchedCommand))
                 : ReorderableListView.builder(
                     itemCount: commands.length,
                     onReorder: (oldIndex, newIndex) {

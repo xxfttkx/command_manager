@@ -104,6 +104,66 @@ abstract class AppLocalizations {
   /// **'Command Manager'**
   String get appTitle;
 
+  /// No description provided for @addCommand.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Command'**
+  String get addCommand;
+
+  /// No description provided for @editCommand.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Command'**
+  String get editCommand;
+
+  /// No description provided for @nameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get nameLabel;
+
+  /// No description provided for @descriptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get descriptionLabel;
+
+  /// No description provided for @commandsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Commands (one per line)'**
+  String get commandsLabel;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @nameAndCommandsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Name and commands cannot be empty'**
+  String get nameAndCommandsRequired;
+
+  /// No description provided for @searchCommand.
+  ///
+  /// In en, this message translates to:
+  /// **'Search command name or content'**
+  String get searchCommand;
+
+  /// No description provided for @noMatchedCommand.
+  ///
+  /// In en, this message translates to:
+  /// **'No matched command'**
+  String get noMatchedCommand;
+
   /// No description provided for @run.
   ///
   /// In en, this message translates to:

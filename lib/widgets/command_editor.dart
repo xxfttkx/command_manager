@@ -1,3 +1,5 @@
+import 'package:command_manager/gen/l10n/app_localizations.dart';
+import 'package:command_manager/widgets/app_snackbar.dart';
 import 'package:flutter/material.dart';
 import '../models/command_action.dart';
 
@@ -50,8 +52,9 @@ class _CommandEditorState extends State<CommandEditor> {
         .toList();
 
     if (name.isEmpty || commands.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('名称和命令不能为空')),
+      AppSnackbar.show(
+        context,
+        AppLocalizations.of(context)!.nameAndCommandsRequired,
       );
       return;
     }
@@ -66,7 +69,9 @@ class _CommandEditorState extends State<CommandEditor> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(widget.initialData == null ? '新增命令' : '编辑命令'),
+      title: Text(widget.initialData == null
+          ? AppLocalizations.of(context)!.addCommand
+          : AppLocalizations.of(context)!.editCommand),
       content: SizedBox(
         width: 400,
         child: SingleChildScrollView(
@@ -75,15 +80,18 @@ class _CommandEditorState extends State<CommandEditor> {
             children: [
               TextField(
                 controller: _nameController,
-                decoration: const InputDecoration(labelText: '名称'),
+                decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.nameLabel),
               ),
               TextField(
                 controller: _descriptionController,
-                decoration: const InputDecoration(labelText: '描述'),
+                decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.descriptionLabel),
               ),
               TextField(
                 controller: _commandsController,
-                decoration: const InputDecoration(labelText: '命令（每行一条）'),
+                decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.commandsLabel),
                 keyboardType: TextInputType.multiline,
                 maxLines: 10,
                 minLines: 4,
@@ -95,11 +103,11 @@ class _CommandEditorState extends State<CommandEditor> {
       actions: [
         TextButton(
           onPressed: Navigator.of(context).pop,
-          child: const Text('取消'),
+          child: Text(AppLocalizations.of(context)!.cancel),
         ),
         ElevatedButton(
           onPressed: _submit,
-          child: const Text('保存'),
+          child: Text(AppLocalizations.of(context)!.save),
         ),
       ],
     );
