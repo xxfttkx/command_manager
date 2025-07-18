@@ -8,8 +8,6 @@ A lightweight Flutter desktop tool to manage, configure, and run custom command 
 - 🧩 Group multiple commands into one **action**
 - 🎨 Material 3-style UI with dark/light theme support
 - 🚀 Run commands via GUI with real-time output display
-- 📁 Organize commands with folders and labels
-- 🛠️ Built-in command editor with arguments and presets
 - 🔁 Reorderable actions for workflow customization
 
 ## 💡 Use Case Examples
