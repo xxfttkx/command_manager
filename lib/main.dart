@@ -1,3 +1,4 @@
+import 'package:command_manager/gen/l10n/app_localizations.dart';
 import 'package:command_manager/pages/running_commands_page.dart';
 import 'package:command_manager/pages/command_manager_page.dart';
 import 'package:command_manager/pages/settings_page.dart';
@@ -5,21 +6,20 @@ import 'package:command_manager/viewmodels/command_manager_viewmodel.dart';
 import 'package:command_manager/viewmodels/locale_viewmodel.dart';
 import 'package:command_manager/viewmodels/theme_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final themeVM = ThemeViewModel();
-  final localeVM = LocaleViewModel();
-  await themeVM.load();
-  await localeVM.load();
+  final themeViewModel = ThemeViewModel();
+  final localeViewModel = LocaleViewModel();
+  await themeViewModel.load();
+  await localeViewModel.load();
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => themeVM),
-        ChangeNotifierProvider(create: (_) => localeVM),
+        ChangeNotifierProvider(create: (_) => themeViewModel),
+        ChangeNotifierProvider(create: (_) => localeViewModel),
         ChangeNotifierProvider(create: (_) => CommandManagerViewModel())
       ],
       child: const MyApp(),
@@ -35,8 +35,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.watch<ThemeViewModel>();
-    final locale = context.watch<LocaleViewModel>();
+    final themeViewModel = context.watch<ThemeViewModel>();
+    final localeViewModel = context.watch<LocaleViewModel>();
     return ChangeNotifierProvider(
       create: (context) => MyAppState(),
       child: MaterialApp(
@@ -44,17 +44,13 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           useMaterial3: true,
           fontFamily: 'NotoSansSC',
-          colorScheme: ColorScheme.fromSeed(seedColor: theme.color
+          colorScheme: ColorScheme.fromSeed(seedColor: themeViewModel.color
               // ??const Color.fromARGB(255, 21, 255, 25),
               ),
         ),
-        locale: locale.locale,
-        supportedLocales: const [Locale('en'), Locale('zh')],
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: localeViewModel.locale, // 如果你支持动态切换语言
         home: const HomePage(),
       ),
     );

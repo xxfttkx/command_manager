@@ -1,3 +1,4 @@
+import 'package:command_manager/gen/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:command_manager/viewmodels/locale_viewmodel.dart';
@@ -12,7 +13,7 @@ class SettingsPage extends StatelessWidget {
     final localeViewModel = context.watch<LocaleViewModel>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('设置')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.tabSettings)),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
