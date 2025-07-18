@@ -18,7 +18,7 @@ class SettingsPage extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         children: [
           _SettingsCard(
-            title: '主题颜色',
+            title: AppLocalizations.of(context)!.themeColor,
             child: Wrap(
               spacing: 12,
               runSpacing: 12,
@@ -53,7 +53,7 @@ class SettingsPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           _SettingsCard(
-            title: '语言',
+            title: AppLocalizations.of(context)!.language,
             child: DropdownButton<Locale>(
               value: localeViewModel.locale,
               onChanged: (Locale? newLocale) {

@@ -5,11 +5,12 @@
   "run": "运行",
   "edit": "编辑",
   "delete": "删除",
+  "runningCommands": "正在运行的命令",
+  "noRunningCommands": "暂无正在运行的命令",
+  "startTime": "启动时间",
+  "terminateProcess": "终止进程",
   "tabRunning": "运行中",
   "tabSettings": "设置",
-  "darkMode": "深色模式",
   "themeColor": "主题颜色",
-  "language": "语言",
-  "languageChinese": "中文",
-  "languageEnglish": "英文"
+  "language": "语言"
 }

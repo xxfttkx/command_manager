@@ -24,23 +24,26 @@ class AppLocalizationsZh extends AppLocalizations {
   String get delete => '删除';
 
   @override
+  String get runningCommands => '正在运行的命令';
+
+  @override
+  String get noRunningCommands => '暂无正在运行的命令';
+
+  @override
+  String get startTime => '启动时间';
+
+  @override
+  String get terminateProcess => '终止进程';
+
+  @override
   String get tabRunning => '运行中';
 
   @override
   String get tabSettings => '设置';
 
   @override
-  String get darkMode => '深色模式';
-
-  @override
   String get themeColor => '主题颜色';
 
   @override
   String get language => '语言';
-
-  @override
-  String get languageChinese => '中文';
-
-  @override
-  String get languageEnglish => '英文';
 }

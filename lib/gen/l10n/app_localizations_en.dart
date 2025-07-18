@@ -24,23 +24,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get delete => 'Delete';
 
   @override
+  String get runningCommands => 'Running Commands';
+
+  @override
+  String get noRunningCommands => 'No running commands';
+
+  @override
+  String get startTime => 'Start Time';
+
+  @override
+  String get terminateProcess => 'Terminate Process';
+
+  @override
   String get tabRunning => 'Running';
 
   @override
   String get tabSettings => 'Settings';
 
   @override
-  String get darkMode => 'Dark Mode';
-
-  @override
   String get themeColor => 'Theme Color';
 
   @override
   String get language => 'Language';
-
-  @override
-  String get languageChinese => 'Chinese';
-
-  @override
-  String get languageEnglish => 'English';
 }

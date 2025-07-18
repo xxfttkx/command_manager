@@ -128,6 +128,30 @@ abstract class AppLocalizations {
   /// **'Delete'**
   String get delete;
 
+  /// No description provided for @runningCommands.
+  ///
+  /// In en, this message translates to:
+  /// **'Running Commands'**
+  String get runningCommands;
+
+  /// No description provided for @noRunningCommands.
+  ///
+  /// In en, this message translates to:
+  /// **'No running commands'**
+  String get noRunningCommands;
+
+  /// No description provided for @startTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Time'**
+  String get startTime;
+
+  /// No description provided for @terminateProcess.
+  ///
+  /// In en, this message translates to:
+  /// **'Terminate Process'**
+  String get terminateProcess;
+
   /// No description provided for @tabRunning.
   ///
   /// In en, this message translates to:
@@ -140,12 +164,6 @@ abstract class AppLocalizations {
   /// **'Settings'**
   String get tabSettings;
 
-  /// No description provided for @darkMode.
-  ///
-  /// In en, this message translates to:
-  /// **'Dark Mode'**
-  String get darkMode;
-
   /// No description provided for @themeColor.
   ///
   /// In en, this message translates to:
@@ -157,18 +175,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Language'**
   String get language;
-
-  /// No description provided for @languageChinese.
-  ///
-  /// In en, this message translates to:
-  /// **'Chinese'**
-  String get languageChinese;
-
-  /// No description provided for @languageEnglish.
-  ///
-  /// In en, this message translates to:
-  /// **'English'**
-  String get languageEnglish;
 }
 
 class _AppLocalizationsDelegate

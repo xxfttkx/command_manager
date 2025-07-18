@@ -5,11 +5,12 @@
   "run": "Run",
   "edit": "Edit",
   "delete": "Delete",
+  "runningCommands": "Running Commands",
+  "noRunningCommands": "No running commands",
+  "startTime": "Start Time",
+  "terminateProcess": "Terminate Process",
   "tabRunning": "Running",
   "tabSettings": "Settings",
-  "darkMode": "Dark Mode",
   "themeColor": "Theme Color",
-  "language": "Language",
-  "languageChinese": "Chinese",
-  "languageEnglish": "English"
+  "language": "Language"
 }

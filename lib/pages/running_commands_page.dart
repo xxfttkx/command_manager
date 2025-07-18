@@ -1,3 +1,4 @@
+import 'package:command_manager/gen/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,9 +13,10 @@ class RunningCommandsPage extends StatelessWidget {
     final running = vm.runningCommands;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('正在运行的命令')),
+      appBar:
+          AppBar(title: Text(AppLocalizations.of(context)!.runningCommands)),
       body: running.isEmpty
-          ? const Center(child: Text('暂无正在运行的命令'))
+          ? Center(child: Text(AppLocalizations.of(context)!.noRunningCommands))
           : ListView.builder(
               itemCount: running.length,
               itemBuilder: (context, index) {
@@ -27,7 +29,8 @@ class RunningCommandsPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('PID: ${rc.pid}'),
-                        Text('启动时间: ${rc.startTime}'),
+                        Text(
+                            '${AppLocalizations.of(context)!.startTime}: ${rc.startTime}'),
                         Text(
                           rc.output.toString(),
                           maxLines: 5,
@@ -37,7 +40,7 @@ class RunningCommandsPage extends StatelessWidget {
                     ),
                     trailing: IconButton(
                       icon: const Icon(Icons.stop_circle, color: Colors.red),
-                      tooltip: '终止进程',
+                      tooltip: AppLocalizations.of(context)!.terminateProcess,
                       onPressed: () {
                         vm.killProcess(rc.pid);
                       },
