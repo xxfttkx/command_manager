@@ -12,9 +12,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get appTitle => '命令管理器';
 
   @override
-  String get tabCommand => '命令管理';
-
-  @override
   String get run => '运行';
 
   @override
@@ -34,9 +31,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get terminateProcess => '终止进程';
-
-  @override
-  String get tabRunning => '运行中';
 
   @override
   String get tabSettings => '设置';

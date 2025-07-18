@@ -1,7 +1,6 @@
 {
   "@@locale": "zh",
   "appTitle": "命令管理器",
-  "tabCommand": "命令管理",
   "run": "运行",
   "edit": "编辑",
   "delete": "删除",
@@ -9,7 +8,6 @@
   "noRunningCommands": "暂无正在运行的命令",
   "startTime": "启动时间",
   "terminateProcess": "终止进程",
-  "tabRunning": "运行中",
   "tabSettings": "设置",
   "themeColor": "主题颜色",
   "language": "语言"

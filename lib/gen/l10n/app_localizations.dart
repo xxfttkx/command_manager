@@ -104,12 +104,6 @@ abstract class AppLocalizations {
   /// **'Command Manager'**
   String get appTitle;
 
-  /// No description provided for @tabCommand.
-  ///
-  /// In en, this message translates to:
-  /// **'Command Manager'**
-  String get tabCommand;
-
   /// No description provided for @run.
   ///
   /// In en, this message translates to:
@@ -151,12 +145,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Terminate Process'**
   String get terminateProcess;
-
-  /// No description provided for @tabRunning.
-  ///
-  /// In en, this message translates to:
-  /// **'Running'**
-  String get tabRunning;
 
   /// No description provided for @tabSettings.
   ///

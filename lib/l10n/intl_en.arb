@@ -1,7 +1,6 @@
 {
   "@@locale": "en",
   "appTitle": "Command Manager",
-  "tabCommand": "Command Manager",
   "run": "Run",
   "edit": "Edit",
   "delete": "Delete",
@@ -9,7 +8,6 @@
   "noRunningCommands": "No running commands",
   "startTime": "Start Time",
   "terminateProcess": "Terminate Process",
-  "tabRunning": "Running",
   "tabSettings": "Settings",
   "themeColor": "Theme Color",
   "language": "Language"

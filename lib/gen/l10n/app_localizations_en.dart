@@ -12,9 +12,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'Command Manager';
 
   @override
-  String get tabCommand => 'Command Manager';
-
-  @override
   String get run => 'Run';
 
   @override
@@ -34,9 +31,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get terminateProcess => 'Terminate Process';
-
-  @override
-  String get tabRunning => 'Running';
 
   @override
   String get tabSettings => 'Settings';
