@@ -36,13 +36,15 @@ class _CommandManagerPageState extends State<CommandManagerPage> {
           switch (result) {
             case AddCommandResult.success:
               AppSnackbar.show(
-                context,
-                'Command "${updated.name}" saved successfully.',
-              );
+                  context,
+                  AppLocalizations.of(context)!
+                      .saveSuccessMessage(updated.name));
               break;
             case AddCommandResult.duplicate:
-              AppSnackbar.showError(context,
-                  'Another command with name "${updated.name}" already exists.');
+              AppSnackbar.showError(
+                  context,
+                  AppLocalizations.of(context)!
+                      .duplicateCommandMessage(updated.name));
               break;
             default:
               break;
@@ -105,18 +107,22 @@ class _CommandManagerPageState extends State<CommandManagerPage> {
                             final confirmed = await showDialog<bool>(
                               context: context,
                               builder: (ctx) => AlertDialog(
-                                title: const Text('确认删除'),
-                                content: const Text('你确定要删除这个命令吗？此操作无法撤销。'),
+                                title: Text(AppLocalizations.of(context)!
+                                    .deleteConfirmTitle),
+                                content: Text(AppLocalizations.of(context)!
+                                    .deleteConfirmContent),
                                 actions: [
                                   TextButton(
                                     onPressed: () =>
                                         Navigator.of(ctx).pop(false),
-                                    child: const Text('取消'),
+                                    child: Text(
+                                        AppLocalizations.of(context)!.cancel),
                                   ),
                                   TextButton(
                                     onPressed: () =>
                                         Navigator.of(ctx).pop(true),
-                                    child: const Text('删除',
+                                    child: Text(
+                                        AppLocalizations.of(context)!.delete,
                                         style: TextStyle(color: Colors.red)),
                                   ),
                                 ],
@@ -124,13 +130,11 @@ class _CommandManagerPageState extends State<CommandManagerPage> {
                             );
 
                             if (confirmed == true && context.mounted) {
-                              vm.deleteCommand(action); // 执行删除操作
-
-                              // 弹出删除成功的提示
+                              vm.deleteCommand(action);
                               AppSnackbar.show(
-                                context,
-                                '命令 "${action.name}" 已成功删除。',
-                              );
+                                  context,
+                                  AppLocalizations.of(context)!
+                                      .deleteSuccessMessage(action.name));
                             }
                           },
                           onRun: () => vm.runCommand(action),
@@ -143,7 +147,7 @@ class _CommandManagerPageState extends State<CommandManagerPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _openEditor(),
-        tooltip: '添加命令',
+        tooltip: AppLocalizations.of(context)!.addCommandTooltip,
         child: const Icon(Icons.add),
       ),
     );

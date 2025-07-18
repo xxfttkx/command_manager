@@ -9,8 +9,16 @@
   "cancel": "取消",
   "save": "保存",
   "nameAndCommandsRequired": "名称和命令不能为空",
+  
   "searchCommand": "搜索命令名或内容",
   "noMatchedCommand": "无匹配命令",
+  "deleteConfirmTitle": "确认删除",
+  "deleteConfirmContent": "你确定要删除这个命令吗？此操作无法撤销。",
+  "deleteSuccessMessage": "命令 \"{commandName}\" 已成功删除。",
+  "addCommandTooltip": "添加命令",
+  "saveSuccessMessage": "命令 \"{commandName}\" 保存成功。",
+  "duplicateCommandMessage": "已存在同名命令 \"{commandName}\"。",
+
   "run": "运行",
   "edit": "编辑",
   "delete": "删除",

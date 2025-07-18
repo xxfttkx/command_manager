@@ -36,10 +36,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nameAndCommandsRequired => 'Name and commands cannot be empty';
 
   @override
-  String get searchCommand => 'Search command name or content';
+  String get searchCommand => 'Search by name or content';
 
   @override
-  String get noMatchedCommand => 'No matched command';
+  String get noMatchedCommand => 'No matched commands';
+
+  @override
+  String get deleteConfirmTitle => 'Confirm Deletion';
+
+  @override
+  String get deleteConfirmContent =>
+      'Are you sure you want to delete this command? This action cannot be undone.';
+
+  @override
+  String deleteSuccessMessage(Object commandName) {
+    return 'Command \"$commandName\" deleted successfully.';
+  }
+
+  @override
+  String get addCommandTooltip => 'Add Command';
+
+  @override
+  String saveSuccessMessage(Object commandName) {
+    return 'Command \"$commandName\" saved successfully.';
+  }
+
+  @override
+  String duplicateCommandMessage(Object commandName) {
+    return 'Another command with name \"$commandName\" already exists.';
+  }
 
   @override
   String get run => 'Run';

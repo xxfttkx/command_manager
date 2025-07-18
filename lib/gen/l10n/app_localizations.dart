@@ -152,17 +152,53 @@ abstract class AppLocalizations {
   /// **'Name and commands cannot be empty'**
   String get nameAndCommandsRequired;
 
-  /// No description provided for @searchCommand.
+  /// Hint text for the search input field
   ///
   /// In en, this message translates to:
-  /// **'Search command name or content'**
+  /// **'Search by name or content'**
   String get searchCommand;
 
-  /// No description provided for @noMatchedCommand.
+  /// Text shown when no commands match the search
   ///
   /// In en, this message translates to:
-  /// **'No matched command'**
+  /// **'No matched commands'**
   String get noMatchedCommand;
+
+  /// Title of the delete confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Deletion'**
+  String get deleteConfirmTitle;
+
+  /// Content message of the delete confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this command? This action cannot be undone.'**
+  String get deleteConfirmContent;
+
+  /// Snackbar message after successful deletion
+  ///
+  /// In en, this message translates to:
+  /// **'Command \"{commandName}\" deleted successfully.'**
+  String deleteSuccessMessage(Object commandName);
+
+  /// Tooltip text for the add command FAB
+  ///
+  /// In en, this message translates to:
+  /// **'Add Command'**
+  String get addCommandTooltip;
+
+  /// Snackbar message after successful save
+  ///
+  /// In en, this message translates to:
+  /// **'Command \"{commandName}\" saved successfully.'**
+  String saveSuccessMessage(Object commandName);
+
+  /// Snackbar error when duplicate command name is added
+  ///
+  /// In en, this message translates to:
+  /// **'Another command with name \"{commandName}\" already exists.'**
+  String duplicateCommandMessage(Object commandName);
 
   /// No description provided for @run.
   ///

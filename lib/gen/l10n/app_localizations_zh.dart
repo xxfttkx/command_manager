@@ -42,6 +42,30 @@ class AppLocalizationsZh extends AppLocalizations {
   String get noMatchedCommand => '无匹配命令';
 
   @override
+  String get deleteConfirmTitle => '确认删除';
+
+  @override
+  String get deleteConfirmContent => '你确定要删除这个命令吗？此操作无法撤销。';
+
+  @override
+  String deleteSuccessMessage(Object commandName) {
+    return '命令 \"$commandName\" 已成功删除。';
+  }
+
+  @override
+  String get addCommandTooltip => '添加命令';
+
+  @override
+  String saveSuccessMessage(Object commandName) {
+    return '命令 \"$commandName\" 保存成功。';
+  }
+
+  @override
+  String duplicateCommandMessage(Object commandName) {
+    return '已存在同名命令 \"$commandName\"。';
+  }
+
+  @override
   String get run => '运行';
 
   @override
