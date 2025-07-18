@@ -283,6 +283,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Language'**
   String get language;
+
+  /// No description provided for @shellPathTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Shell Path'**
+  String get shellPathTitle;
+
+  /// No description provided for @argsTemplateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Shell Argument Template'**
+  String get argsTemplateTitle;
+
+  /// No description provided for @shellPathHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., powershell.exe or /bin/bash'**
+  String get shellPathHint;
+
+  /// No description provided for @argsTemplateHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., -Command or -c'**
+  String get argsTemplateHint;
 }
 
 class _AppLocalizationsDelegate

@@ -3,9 +3,48 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:command_manager/viewmodels/locale_viewmodel.dart';
 import 'package:command_manager/viewmodels/theme_viewmodel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
+
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  late final TextEditingController _shellPathController;
+  late final TextEditingController _argsTemplateController;
+
+  @override
+  void initState() {
+    super.initState();
+    _shellPathController = TextEditingController();
+    _argsTemplateController = TextEditingController();
+    _loadShellSettings();
+  }
+
+  Future<void> _loadShellSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    _shellPathController.text =
+        prefs.getString('shellPath') ?? 'powershell.exe';
+    _argsTemplateController.text =
+        prefs.getString('argsTemplate') ?? '-Command {command}';
+    setState(() {}); // 触发 UI 更新
+  }
+
+  Future<void> _saveShellSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('shellPath', _shellPathController.text);
+    await prefs.setString('argsTemplate', _argsTemplateController.text);
+  }
+
+  @override
+  void dispose() {
+    _shellPathController.dispose();
+    _argsTemplateController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +115,30 @@ class SettingsPage extends StatelessWidget {
               dropdownColor: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(12)),
               underline: Container(height: 0), // 去掉下划线
+            ),
+          ),
+          const SizedBox(height: 16),
+          _SettingsCard(
+            title: AppLocalizations.of(context)!.shellPathTitle,
+            child: TextField(
+              controller: _shellPathController,
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                hintText: AppLocalizations.of(context)!.shellPathHint,
+              ),
+              onChanged: (_) => _saveShellSettings(),
+            ),
+          ),
+          const SizedBox(height: 16),
+          _SettingsCard(
+            title: AppLocalizations.of(context)!.argsTemplateTitle,
+            child: TextField(
+              controller: _argsTemplateController,
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                hintText: AppLocalizations.of(context)!.argsTemplateHint,
+              ),
+              onChanged: (_) => _saveShellSettings(),
             ),
           ),
         ],

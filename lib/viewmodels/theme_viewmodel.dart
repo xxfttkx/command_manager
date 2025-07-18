@@ -3,8 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeViewModel extends ChangeNotifier {
   static const List<Color> presetColors = [
-    Colors.blue,
     Colors.green,
+    Colors.blue,
     Colors.pink,
     Colors.orange,
     Colors.purple,

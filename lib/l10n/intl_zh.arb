@@ -32,5 +32,9 @@
   "terminateProcess": "终止进程",
   "tabSettings": "设置",
   "themeColor": "主题颜色",
-  "language": "语言"
+  "language": "语言",
+  "shellPathTitle": "Shell 执行器路径",
+  "argsTemplateTitle": "Shell 参数模板",
+  "shellPathHint": "例如 powershell.exe 或 /bin/bash",
+  "argsTemplateHint": "例如 -Command 或 -c"
 }

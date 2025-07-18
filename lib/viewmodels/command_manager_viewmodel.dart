@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:command_manager/models/running_command.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/command_action.dart';
 import '../services/config_storage.dart';
 
@@ -112,11 +113,14 @@ class CommandManagerViewModel extends ChangeNotifier {
   }
 
   Future<void> runCommand(CommandAction action) async {
+    final prefs = await SharedPreferences.getInstance();
+    final shellPath = prefs.getString('shellPath') ?? 'powershell.exe';
+    final argsTemplate = prefs.getString('argsTemplate') ?? '-Command';
     try {
       final fullCommand = action.commands.join(' ; ');
       final process = await Process.start(
-        'powershell.exe',
-        ['-Command', fullCommand],
+        shellPath,
+        [argsTemplate, fullCommand],
       );
 
       final rc = RunningCommand(

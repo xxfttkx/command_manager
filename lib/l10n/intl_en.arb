@@ -85,5 +85,9 @@
   "terminateProcess": "Terminate Process",
   "tabSettings": "Settings",
   "themeColor": "Theme Color",
-  "language": "Language"
+  "language": "Language",
+  "shellPathTitle": "Shell Path",
+  "argsTemplateTitle": "Shell Argument Template",
+  "shellPathHint": "e.g., powershell.exe or /bin/bash",
+  "argsTemplateHint": "e.g., -Command or -c"
 }

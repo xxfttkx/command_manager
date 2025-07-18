@@ -111,4 +111,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get language => 'Language';
+
+  @override
+  String get shellPathTitle => 'Shell Path';
+
+  @override
+  String get argsTemplateTitle => 'Shell Argument Template';
+
+  @override
+  String get shellPathHint => 'e.g., powershell.exe or /bin/bash';
+
+  @override
+  String get argsTemplateHint => 'e.g., -Command or -c';
 }

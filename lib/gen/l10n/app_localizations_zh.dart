@@ -110,4 +110,16 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get language => '语言';
+
+  @override
+  String get shellPathTitle => 'Shell 执行器路径';
+
+  @override
+  String get argsTemplateTitle => 'Shell 参数模板';
+
+  @override
+  String get shellPathHint => '例如 powershell.exe 或 /bin/bash';
+
+  @override
+  String get argsTemplateHint => '例如 -Command 或 -c';
 }
