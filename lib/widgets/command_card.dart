@@ -1,3 +1,4 @@
+import 'package:command_manager/gen/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../models/command_action.dart';
 
@@ -37,17 +38,17 @@ class CommandCard extends StatelessWidget {
                   children: [
                     IconButton(
                       icon: const Icon(Icons.play_arrow),
-                      tooltip: '运行',
+                      tooltip: AppLocalizations.of(context)!.run,
                       onPressed: onRun,
                     ),
                     IconButton(
                       icon: const Icon(Icons.edit),
-                      tooltip: '编辑',
+                      tooltip: AppLocalizations.of(context)!.edit,
                       onPressed: onEdit,
                     ),
                     IconButton(
                       icon: const Icon(Icons.delete),
-                      tooltip: '删除',
+                      tooltip: AppLocalizations.of(context)!.delete,
                       onPressed: onDelete,
                     ),
                   ],
