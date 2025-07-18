@@ -200,6 +200,18 @@ abstract class AppLocalizations {
   /// **'Another command with name \"{commandName}\" already exists.'**
   String duplicateCommandMessage(Object commandName);
 
+  /// Message shown when a command starts running
+  ///
+  /// In en, this message translates to:
+  /// **'Starting command \"{commandName}\"'**
+  String startCommand(Object commandName);
+
+  /// Message shown when a command finishes running
+  ///
+  /// In en, this message translates to:
+  /// **'Command \"{commandName}\" completed'**
+  String endCommand(Object commandName);
+
   /// No description provided for @run.
   ///
   /// In en, this message translates to:

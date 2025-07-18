@@ -101,44 +101,55 @@ class _CommandManagerPageState extends State<CommandManagerPage> {
                       return KeyedSubtree(
                         key: ValueKey(action.name),
                         child: CommandCard(
-                          action: action,
-                          onEdit: () => _openEditor(initial: action),
-                          onDelete: () async {
-                            final confirmed = await showDialog<bool>(
-                              context: context,
-                              builder: (ctx) => AlertDialog(
-                                title: Text(AppLocalizations.of(context)!
-                                    .deleteConfirmTitle),
-                                content: Text(AppLocalizations.of(context)!
-                                    .deleteConfirmContent),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.of(ctx).pop(false),
-                                    child: Text(
-                                        AppLocalizations.of(context)!.cancel),
-                                  ),
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.of(ctx).pop(true),
-                                    child: Text(
-                                        AppLocalizations.of(context)!.delete,
-                                        style: TextStyle(color: Colors.red)),
-                                  ),
-                                ],
-                              ),
-                            );
+                            action: action,
+                            onEdit: () => _openEditor(initial: action),
+                            onDelete: () async {
+                              final confirmed = await showDialog<bool>(
+                                context: context,
+                                builder: (ctx) => AlertDialog(
+                                  title: Text(AppLocalizations.of(context)!
+                                      .deleteConfirmTitle),
+                                  content: Text(AppLocalizations.of(context)!
+                                      .deleteConfirmContent),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(ctx).pop(false),
+                                      child: Text(
+                                          AppLocalizations.of(context)!.cancel),
+                                    ),
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(ctx).pop(true),
+                                      child: Text(
+                                          AppLocalizations.of(context)!.delete,
+                                          style: TextStyle(color: Colors.red)),
+                                    ),
+                                  ],
+                                ),
+                              );
 
-                            if (confirmed == true && context.mounted) {
-                              vm.deleteCommand(action);
+                              if (confirmed == true && context.mounted) {
+                                vm.deleteCommand(action);
+                                AppSnackbar.show(
+                                    context,
+                                    AppLocalizations.of(context)!
+                                        .deleteSuccessMessage(action.name));
+                              }
+                            },
+                            onRun: () async {
                               AppSnackbar.show(
                                   context,
                                   AppLocalizations.of(context)!
-                                      .deleteSuccessMessage(action.name));
-                            }
-                          },
-                          onRun: () => vm.runCommand(action),
-                        ),
+                                      .startCommand(action.name));
+                              await vm.runCommand(action);
+                              if (context.mounted) {
+                                AppSnackbar.show(
+                                    context,
+                                    AppLocalizations.of(context)!
+                                        .endCommand(action.name));
+                              }
+                            }),
                       );
                     },
                   ),

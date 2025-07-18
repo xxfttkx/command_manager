@@ -67,6 +67,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String startCommand(Object commandName) {
+    return 'Starting command \"$commandName\"';
+  }
+
+  @override
+  String endCommand(Object commandName) {
+    return 'Command \"$commandName\" completed';
+  }
+
+  @override
   String get run => 'Run';
 
   @override

@@ -58,6 +58,21 @@
       "commandName": {}
     }
   },
+  "startCommand": "Starting command \"{commandName}\"",
+  "@startCommand": {
+    "description": "Message shown when a command starts running",
+    "placeholders": {
+      "commandName": {}
+    }
+  },
+  "endCommand": "Command \"{commandName}\" completed",
+  
+  "@endCommand": {
+    "description": "Message shown when a command finishes running",
+    "placeholders": {
+      "commandName": {}
+    }
+  },
 
   "run": "Run",
   "edit": "Edit",

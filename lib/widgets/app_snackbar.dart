@@ -23,7 +23,9 @@ class AppSnackbar {
     required Color backgroundColor,
     Duration duration = const Duration(seconds: 4),
   }) {
-    ScaffoldMessenger.of(context).showSnackBar(
+    final messenger = ScaffoldMessenger.of(context);
+    messenger.hideCurrentSnackBar(); // 先隐藏当前的
+    messenger.showSnackBar(
       SnackBar(
         content: Text(message),
         backgroundColor: backgroundColor,

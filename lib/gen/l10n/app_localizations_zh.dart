@@ -66,6 +66,16 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String startCommand(Object commandName) {
+    return '开始运行命令 “$commandName”';
+  }
+
+  @override
+  String endCommand(Object commandName) {
+    return '命令 “$commandName” 运行完毕';
+  }
+
+  @override
   String get run => '运行';
 
   @override
