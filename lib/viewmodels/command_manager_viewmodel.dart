@@ -132,17 +132,22 @@ class CommandManagerViewModel extends ChangeNotifier {
       _running.add(rc);
       notifyListeners();
 
-      process.stdout.transform(utf8.decoder).listen((line) {
+      final stdoutSub = process.stdout.transform(utf8.decoder).listen((line) {
         rc.output.write(line);
         notifyListeners();
       });
 
-      process.stderr.transform(utf8.decoder).listen((line) {
+      final stderrSub = process.stderr.transform(utf8.decoder).listen((line) {
         rc.output.write('[stderr] $line');
         notifyListeners();
       });
 
-      await process.exitCode;
+      await process.exitCode.then((exitCode) {
+        stdoutSub.cancel();
+        stderrSub.cancel();
+        debugPrint('Process exited with code $exitCode');
+      });
+
       _finishedCommands.add(rc);
       _running.removeWhere((p) => p.pid == process.pid);
       notifyListeners();
