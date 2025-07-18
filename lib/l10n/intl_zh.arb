@@ -1,0 +1,12 @@
+{
+  "@@locale": "zh",
+  "appTitle": "命令管理器",
+  "tabCommand": "命令管理",
+  "tabRunning": "运行中",
+  "tabSettings": "设置",
+  "darkMode": "深色模式",
+  "themeColor": "主题颜色",
+  "language": "语言",
+  "languageChinese": "中文",
+  "languageEnglish": "英文"
+}

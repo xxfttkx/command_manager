@@ -1,0 +1,12 @@
+{
+  "@@locale": "en",
+  "appTitle": "Command Manager",
+  "tabCommand": "Command Manager",
+  "tabRunning": "Running",
+  "tabSettings": "Settings",
+  "darkMode": "Dark Mode",
+  "themeColor": "Theme Color",
+  "language": "Language",
+  "languageChinese": "Chinese",
+  "languageEnglish": "English"
+}
