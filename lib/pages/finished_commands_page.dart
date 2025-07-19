@@ -35,7 +35,9 @@ class FinishedCommandsPage extends StatelessWidget {
                         Text(
                             '${AppLocalizations.of(context)!.startTime}: ${command.startTime}'),
                         Text(
-                          command.output.toString(),
+                          command.output
+                              .toString()
+                              .replaceAll(RegExp(r'\x1B\[[0-9;]*[a-zA-Z]'), ''),
                           maxLines: 5,
                           overflow: TextOverflow.ellipsis,
                         ),

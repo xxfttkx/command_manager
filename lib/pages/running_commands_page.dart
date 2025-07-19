@@ -32,8 +32,10 @@ class RunningCommandsPage extends StatelessWidget {
                         Text(
                             '${AppLocalizations.of(context)!.startTime}: ${rc.startTime}'),
                         Text(
-                          rc.output.toString(),
                           maxLines: 5,
+                          rc.output
+                              .toString()
+                              .replaceAll(RegExp(r'\x1B\[[0-9;]*[a-zA-Z]'), ''),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],
