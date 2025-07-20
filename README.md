@@ -1,6 +1,6 @@
 # Command Manager
 
-A lightweight Flutter desktop tool to manage, configure, and run custom command groups with ease.
+A lightweight tool to manage, configure, and run custom command groups with ease — powered by Flutter.
 
 ## ✨ Features
 
