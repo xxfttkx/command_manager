@@ -22,7 +22,7 @@ class RunningCommandsPage extends StatelessWidget {
               itemCount: running.length,
               itemBuilder: (context, index) {
                 return CommandExecutionCard(
-                    rc: running[index], type: CommandType.runningCommand);
+                    rc: running[index], type: ExecutionType.running);
               },
             ),
     );

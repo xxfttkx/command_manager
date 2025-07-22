@@ -24,7 +24,7 @@ class FinishedCommandsPage extends StatelessWidget {
               itemBuilder: (context, index) {
                 return CommandExecutionCard(
                     rc: finishedCommands[finishedCommands.length - 1 - index],
-                    type: CommandType.finishedCommand);
+                    type: ExecutionType.finished);
               },
             ),
     );
