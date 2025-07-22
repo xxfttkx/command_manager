@@ -10,12 +10,34 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
 import 'package:system_tray/system_tray.dart';
+import 'package:window_manager/window_manager.dart';
+
+class MyWindowListener extends WindowListener {
+  @override
+  void onWindowClose() async {
+    bool isPreventClose = await windowManager.isPreventClose();
+    if (isPreventClose) {
+      // 拦截关闭事件，隐藏窗口（最小化到托盘）
+      await windowManager.hide();
+    }
+  }
+}
+
+Future<void> initWindowManager() async {
+  // 初始化 window_manager
+  await windowManager.ensureInitialized();
+
+  // 设置窗口为可关闭监听
+  windowManager.setPreventClose(true); // 重要！
+
+  // 监听关闭事件
+  windowManager.addListener(MyWindowListener());
+}
 
 Future<void> initSystemTray() async {
   String path =
       Platform.isWindows ? 'assets/app_icon.ico' : 'assets/app_icon.png';
 
-  final AppWindow appWindow = AppWindow();
   final SystemTray systemTray = SystemTray();
 
   // We first init the systray menu
@@ -27,9 +49,10 @@ Future<void> initSystemTray() async {
   // create context menu
   final Menu menu = Menu();
   await menu.buildFrom([
-    MenuItemLabel(label: 'Show', onClicked: (menuItem) => appWindow.show()),
-    MenuItemLabel(label: 'Hide', onClicked: (menuItem) => appWindow.hide()),
-    MenuItemLabel(label: 'Exit', onClicked: (menuItem) => appWindow.close()),
+    MenuItemLabel(label: 'Show', onClicked: (menuItem) => windowManager.show()),
+    MenuItemLabel(label: 'Hide', onClicked: (menuItem) => windowManager.hide()),
+    MenuItemLabel(
+        label: 'Exit', onClicked: (menuItem) => windowManager.destroy()),
   ]);
 
   // set context menu
@@ -39,9 +62,9 @@ Future<void> initSystemTray() async {
   systemTray.registerSystemTrayEventHandler((eventName) {
     debugPrint("eventName: $eventName");
     if (eventName == kSystemTrayEventClick) {
-      Platform.isWindows ? appWindow.show() : systemTray.popUpContextMenu();
+      Platform.isWindows ? windowManager.show() : systemTray.popUpContextMenu();
     } else if (eventName == kSystemTrayEventRightClick) {
-      Platform.isWindows ? systemTray.popUpContextMenu() : appWindow.show();
+      Platform.isWindows ? systemTray.popUpContextMenu() : windowManager.show();
     }
   });
 }
@@ -49,6 +72,7 @@ Future<void> initSystemTray() async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initSystemTray();
+  await initWindowManager();
 
   final themeViewModel = ThemeViewModel();
   final localeViewModel = LocaleViewModel();
