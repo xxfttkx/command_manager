@@ -135,6 +135,8 @@ class CommandManagerViewModel extends ChangeNotifier {
       final stdoutSub = process.stdout.transform(utf8.decoder).listen((line) {
         rc.output.write(line);
         notifyListeners();
+      }, onError: (e) {
+        print("Error decoding process output: $e");
       });
 
       final stderrSub = process.stderr.transform(utf8.decoder).listen((line) {
