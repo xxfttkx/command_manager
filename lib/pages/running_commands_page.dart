@@ -21,7 +21,7 @@ class RunningCommandsPage extends StatelessWidget {
           : ListView.builder(
               itemCount: running.length,
               itemBuilder: (context, index) {
-                return RunningCommandCard(
+                return CommandExecutionCard(
                     rc: running[index], type: CommandType.runningCommand);
               },
             ),

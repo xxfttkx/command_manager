@@ -22,7 +22,7 @@ class FinishedCommandsPage extends StatelessWidget {
           : ListView.builder(
               itemCount: finishedCommands.length,
               itemBuilder: (context, index) {
-                return RunningCommandCard(
+                return CommandExecutionCard(
                     rc: finishedCommands[finishedCommands.length - 1 - index],
                     type: CommandType.finishedCommand);
               },

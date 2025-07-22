@@ -7,10 +7,10 @@ import 'package:provider/provider.dart';
 
 enum CommandType { runningCommand, finishedCommand }
 
-class RunningCommandCard extends StatelessWidget {
+class CommandExecutionCard extends StatelessWidget {
   final RunningCommand rc;
   final CommandType type;
-  const RunningCommandCard({
+  const CommandExecutionCard({
     Key? key,
     required this.rc,
     required this.type,
