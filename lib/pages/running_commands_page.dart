@@ -1,5 +1,5 @@
 import 'package:command_manager/gen/l10n/app_localizations.dart';
-import 'package:command_manager/widgets/running_command_card.dart';
+import 'package:command_manager/widgets/command_execution_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
