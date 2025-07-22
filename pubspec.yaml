@@ -18,6 +18,7 @@ dependencies:
   english_words: ^4.0.0
   path_provider: ^2.1.2
   shared_preferences: ^2.2.2
+  system_tray: ^2.0.3
 
 dev_dependencies:
   flutter_test:
@@ -28,7 +29,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
-
+  assets:
+    - assets/app_icon.ico
+    - assets/app_icon.png
   fonts:
     - family: NotoSansSC
       fonts:
