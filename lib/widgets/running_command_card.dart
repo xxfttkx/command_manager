@@ -5,7 +5,7 @@ import 'package:command_manager/widgets/app_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-enum CommandType { RunningCommand, FinishedCommand }
+enum CommandType { runningCommand, finishedCommand }
 
 class RunningCommandCard extends StatelessWidget {
   final RunningCommand rc;
@@ -60,7 +60,7 @@ class RunningCommandCard extends StatelessWidget {
               ),
             ],
           ),
-          trailing: type == CommandType.RunningCommand
+          trailing: type == CommandType.runningCommand
               ? IconButton(
                   icon: const Icon(Icons.stop_circle, color: Colors.red),
                   tooltip: AppLocalizations.of(context)!.terminateProcess,
