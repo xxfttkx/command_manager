@@ -19,10 +19,18 @@ A lightweight tool to manage, configure, and run custom command groups with ease
 ## 🖥️ Platform
 
 Currently optimized for **Flutter Desktop (Windows)**.
+Theoretically compatible with other platforms supported by Flutter, though not fully tested.
 
 ## 📸 Screenshots
 
-_Add screenshots here if available._
+<p align="center">
+  <img src="static/screenshots/command_manager.png" width="45%" />
+  <img src="static/screenshots/running_command.png" width="45%" />
+</p>
+<p align="center">
+  <img src="static/screenshots/finished_command.png" width="45%" />
+  <img src="static/screenshots/settings.png" width="45%" />
+</p>
 
 ## 📦 Getting Started
 
@@ -41,7 +49,7 @@ flutter run -d windows
 - `pages/` – Main UI pages like Home, Finished, etc.
 - `widgets/` – Reusable UI components
 - `services/` – Execution, logging, persistence
-- `data/` – Predefined commands and actions (optional)
+- `viewmodels/` – Manages UI state and business logic
 
 ## 🧠 Concepts
 
