@@ -79,7 +79,8 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => settingsViewModel),
-        ChangeNotifierProvider(create: (_) => CommandManagerViewModel())
+        ChangeNotifierProvider(
+            create: (_) => CommandManagerViewModel(settings: settingsViewModel))
       ],
       child: const MyApp(),
     ),

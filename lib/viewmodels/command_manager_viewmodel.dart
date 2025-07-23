@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:command_manager/models/running_command.dart';
+import 'package:command_manager/viewmodels/settings_viewmodel.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +14,9 @@ enum AddCommandResult {
 }
 
 class CommandManagerViewModel extends ChangeNotifier {
+  final SettingsViewModel settings;
+  CommandManagerViewModel({required this.settings});
+
   List<CommandAction> _commands = [];
 
   List<CommandAction> get commands => List.unmodifiable(_commands);
