@@ -1,9 +1,7 @@
 import 'package:command_manager/gen/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:command_manager/viewmodels/locale_viewmodel.dart';
-import 'package:command_manager/viewmodels/theme_viewmodel.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:command_manager/viewmodels/settings_viewmodel.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -24,21 +22,6 @@ class _SettingsPageState extends State<SettingsPage> {
     _loadShellSettings();
   }
 
-  Future<void> _loadShellSettings() async {
-    final prefs = await SharedPreferences.getInstance();
-    _shellPathController.text =
-        prefs.getString('shellPath') ?? 'powershell.exe';
-    _argsTemplateController.text =
-        prefs.getString('argsTemplate') ?? '-Command {command}';
-    setState(() {}); // 触发 UI 更新
-  }
-
-  Future<void> _saveShellSettings() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('shellPath', _shellPathController.text);
-    await prefs.setString('argsTemplate', _argsTemplateController.text);
-  }
-
   @override
   void dispose() {
     _shellPathController.dispose();
@@ -46,10 +29,16 @@ class _SettingsPageState extends State<SettingsPage> {
     super.dispose();
   }
 
+  Future<void> _loadShellSettings() async {
+    final settingsViewModel = context.read<SettingsViewModel>();
+    _shellPathController.text = settingsViewModel.shellPath;
+    _argsTemplateController.text = settingsViewModel.argsTemplate;
+    setState(() {}); // 触发 UI 更新
+  }
+
   @override
   Widget build(BuildContext context) {
-    final themeViewModel = context.watch<ThemeViewModel>();
-    final localeViewModel = context.watch<LocaleViewModel>();
+    final settingsViewModel = context.watch<SettingsViewModel>();
 
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.tabSettings)),
@@ -62,13 +51,13 @@ class _SettingsPageState extends State<SettingsPage> {
               spacing: 12,
               runSpacing: 12,
               children: List.generate(
-                ThemeViewModel.presetColors.length,
+                SettingsViewModel.presetColors.length,
                 (i) {
-                  final color = ThemeViewModel.presetColors[i];
-                  final isSelected = color == themeViewModel.color;
+                  final color = SettingsViewModel.presetColors[i];
+                  final isSelected = color == settingsViewModel.color;
 
                   return GestureDetector(
-                    onTap: () => themeViewModel.setColorIndex(i),
+                    onTap: () => settingsViewModel.setColorIndex(i),
                     child: Container(
                       width: 40,
                       height: 40,
@@ -94,10 +83,10 @@ class _SettingsPageState extends State<SettingsPage> {
           _SettingsCard(
             title: AppLocalizations.of(context)!.language,
             child: DropdownButton<Locale>(
-              value: localeViewModel.locale,
+              value: settingsViewModel.locale,
               onChanged: (Locale? newLocale) {
                 if (newLocale != null) {
-                  localeViewModel.setLocale(newLocale);
+                  settingsViewModel.setLocale(newLocale);
                 }
               },
               items: const [
@@ -126,7 +115,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 border: const OutlineInputBorder(),
                 hintText: AppLocalizations.of(context)!.shellPathHint,
               ),
-              onChanged: (_) => _saveShellSettings(),
+              onChanged: (_) =>
+                  settingsViewModel.setShellPath(_shellPathController.text),
             ),
           ),
           const SizedBox(height: 16),
@@ -138,7 +128,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 border: const OutlineInputBorder(),
                 hintText: AppLocalizations.of(context)!.argsTemplateHint,
               ),
-              onChanged: (_) => _saveShellSettings(),
+              onChanged: (_) =>
+                  settingsViewModel.setShellPath(_argsTemplateController.text),
             ),
           ),
         ],

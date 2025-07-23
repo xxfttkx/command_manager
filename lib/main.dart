@@ -4,8 +4,7 @@ import 'package:command_manager/pages/running_commands_page.dart';
 import 'package:command_manager/pages/command_manager_page.dart';
 import 'package:command_manager/pages/settings_page.dart';
 import 'package:command_manager/viewmodels/command_manager_viewmodel.dart';
-import 'package:command_manager/viewmodels/locale_viewmodel.dart';
-import 'package:command_manager/viewmodels/theme_viewmodel.dart';
+import 'package:command_manager/viewmodels/settings_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
@@ -74,15 +73,12 @@ void main() async {
   await initSystemTray();
   await initWindowManager();
 
-  final themeViewModel = ThemeViewModel();
-  final localeViewModel = LocaleViewModel();
-  await themeViewModel.load();
-  await localeViewModel.load();
+  final settingsViewModel = SettingsViewModel();
+  await settingsViewModel.load();
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => themeViewModel),
-        ChangeNotifierProvider(create: (_) => localeViewModel),
+        ChangeNotifierProvider(create: (_) => settingsViewModel),
         ChangeNotifierProvider(create: (_) => CommandManagerViewModel())
       ],
       child: const MyApp(),
@@ -98,8 +94,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeViewModel = context.watch<ThemeViewModel>();
-    final localeViewModel = context.watch<LocaleViewModel>();
+    final settingsViewModel = context.watch<SettingsViewModel>();
     return ChangeNotifierProvider(
       create: (context) => MyAppState(),
       child: MaterialApp(
@@ -107,13 +102,13 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           useMaterial3: true,
           fontFamily: 'NotoSansSC',
-          colorScheme: ColorScheme.fromSeed(seedColor: themeViewModel.color
+          colorScheme: ColorScheme.fromSeed(seedColor: settingsViewModel.color
               // ??const Color.fromARGB(255, 21, 255, 25),
               ),
         ),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        locale: localeViewModel.locale, // 如果你支持动态切换语言
+        locale: settingsViewModel.locale, // 如果你支持动态切换语言
         home: const HomePage(),
       ),
     );

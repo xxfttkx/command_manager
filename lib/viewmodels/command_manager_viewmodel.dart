@@ -114,8 +114,8 @@ class CommandManagerViewModel extends ChangeNotifier {
 
   Future<void> runCommand(CommandAction action) async {
     final prefs = await SharedPreferences.getInstance();
-    final shellPath = prefs.getString('shellPath') ?? 'powershell.exe';
-    final argsTemplate = prefs.getString('argsTemplate') ?? '-Command';
+    final shellPath = prefs.getString('shell_path') ?? 'powershell.exe';
+    final argsTemplate = prefs.getString('args_template') ?? '-Command';
     try {
       final fullCommand = action.commands.join(' ; ');
       final process = await Process.start(
@@ -155,6 +155,15 @@ class CommandManagerViewModel extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       debugPrint('Error running command: $e');
+      final rc = RunningCommand(
+        pid: -1,
+        name: action.name,
+        process: null,
+        startTime: DateTime.now(),
+      );
+      rc.output.write('[error] Error running command: $e');
+      _finishedCommands.add(rc);
+      notifyListeners();
     }
   }
 
