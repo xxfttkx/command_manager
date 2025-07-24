@@ -3,6 +3,7 @@ import 'package:command_manager/models/running_command.dart';
 import 'package:command_manager/viewmodels/command_manager_viewmodel.dart';
 import 'package:command_manager/widgets/app_snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 enum ExecutionType { running, finished }
@@ -33,6 +34,17 @@ class CommandExecutionCard extends StatelessWidget {
               ),
             ),
             actions: [
+              TextButton(
+                onPressed: () {
+                  final textToCopy = rc.output
+                      .toString()
+                      .replaceAll(RegExp(r'\x1B\[[0-9;]*[a-zA-Z]'), '');
+                  Clipboard.setData(ClipboardData(text: textToCopy));
+                  // 你可以用 ScaffoldMessenger 显示提示
+                  AppSnackbar.show(context, 'Copied to clipboard');
+                },
+                child: const Text('Copy'),
+              ),
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
                 child: Text(MaterialLocalizations.of(context).okButtonLabel),
