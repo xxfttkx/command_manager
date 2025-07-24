@@ -307,6 +307,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'e.g., -Command or -c'**
   String get argsTemplateHint;
+
+  /// No description provided for @commandDisplaySettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Command Display Settings'**
+  String get commandDisplaySettings;
+
+  /// No description provided for @newCommandOnTop.
+  ///
+  /// In en, this message translates to:
+  /// **'New commands appear on top'**
+  String get newCommandOnTop;
+
+  /// No description provided for @runCommandOnTop.
+  ///
+  /// In en, this message translates to:
+  /// **'Move command to top after running'**
+  String get runCommandOnTop;
 }
 
 class _AppLocalizationsDelegate

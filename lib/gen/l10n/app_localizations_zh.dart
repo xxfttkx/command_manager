@@ -122,4 +122,13 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get argsTemplateHint => '例如 -Command 或 -c';
+
+  @override
+  String get commandDisplaySettings => '命令显示设置';
+
+  @override
+  String get newCommandOnTop => '新增命令显示在最上';
+
+  @override
+  String get runCommandOnTop => '命令运行后显示在最上';
 }

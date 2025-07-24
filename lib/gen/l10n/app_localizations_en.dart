@@ -123,4 +123,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get argsTemplateHint => 'e.g., -Command or -c';
+
+  @override
+  String get commandDisplaySettings => 'Command Display Settings';
+
+  @override
+  String get newCommandOnTop => 'New commands appear on top';
+
+  @override
+  String get runCommandOnTop => 'Move command to top after running';
 }

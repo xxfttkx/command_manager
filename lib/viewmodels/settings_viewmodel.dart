@@ -8,7 +8,9 @@ class SettingsViewModel extends ChangeNotifier {
   bool _isDark = false;
   int _colorIndex = 0;
   String _shellPath = 'powershell.exe';
-  String _argsTemplate = '-Command {command}';
+  String _argsTemplate = '-Command';
+  bool _newCommandOnTop = false;
+  bool _runCommandOnTop = false;
 
   Locale get locale => _locale;
   static const List<Color> presetColors = [
@@ -22,6 +24,8 @@ class SettingsViewModel extends ChangeNotifier {
   Color get color => presetColors[_colorIndex];
   String get shellPath => _shellPath;
   String get argsTemplate => _argsTemplate;
+  bool get newCommandOnTop => _newCommandOnTop;
+  bool get runCommandOnTop => _runCommandOnTop;
 
   Future<void> load() async {
     _prefs = await SharedPreferences.getInstance();
@@ -30,7 +34,9 @@ class SettingsViewModel extends ChangeNotifier {
     _isDark = _prefs.getBool('theme_dark') ?? false;
     _colorIndex = _prefs.getInt('theme_color_index') ?? 0;
     _shellPath = _prefs.getString('shell_path') ?? 'powershell.exe';
-    _argsTemplate = _prefs.getString('args_template') ?? '-Command {command}';
+    _argsTemplate = _prefs.getString('args_template') ?? '-Command';
+    _newCommandOnTop = _prefs.getBool('new_command_on_top') ?? false;
+    _runCommandOnTop = _prefs.getBool('run_command_on_top') ?? false;
     notifyListeners();
   }
 
@@ -54,9 +60,23 @@ class SettingsViewModel extends ChangeNotifier {
 
   Future<void> setShellPath(String value) async {
     await _prefs.setString('shell_path', value);
+    _shellPath = value;
   }
 
   Future<void> setArgsTemplate(String value) async {
     await _prefs.setString('args_template', value);
+    _argsTemplate = value;
+  }
+
+  Future<void> setNewCommandOnTop(bool value) async {
+    _newCommandOnTop = value;
+    await _prefs.setBool('new_command_on_top', value);
+    notifyListeners();
+  }
+
+  Future<void> setRunCommandOnTop(bool value) async {
+    _runCommandOnTop = value;
+    await _prefs.setBool('run_command_on_top', value);
+    notifyListeners();
   }
 }

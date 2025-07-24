@@ -1,10 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:command_manager/models/running_command.dart';
 import 'package:command_manager/viewmodels/settings_viewmodel.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../models/command_action.dart';
 import '../services/config_storage.dart';
 
@@ -66,8 +66,11 @@ class CommandManagerViewModel extends ChangeNotifier {
     if (exists) {
       return AddCommandResult.duplicate;
     }
-
-    _commands.add(newCommand);
+    if (settings.newCommandOnTop) {
+      _commands.insert(0, newCommand);
+    } else {
+      _commands.add(newCommand);
+    }
     ConfigStorage.saveCommands(_commands);
     notifyListeners();
     return AddCommandResult.success;
@@ -117,9 +120,15 @@ class CommandManagerViewModel extends ChangeNotifier {
   }
 
   Future<void> runCommand(CommandAction action) async {
-    final prefs = await SharedPreferences.getInstance();
-    final shellPath = prefs.getString('shell_path') ?? 'powershell.exe';
-    final argsTemplate = prefs.getString('args_template') ?? '-Command';
+    if (settings.runCommandOnTop) {
+      final index = _commands.indexWhere((cmd) => cmd.name == action.name);
+      if (index != -1) {
+        final cmd = _commands.removeAt(index);
+        _commands.insert(0, cmd);
+      }
+    }
+    final shellPath = settings.shellPath;
+    final argsTemplate = settings.argsTemplate;
     try {
       final fullCommand = action.commands.join(' ; ');
       final process = await Process.start(
@@ -136,14 +145,20 @@ class CommandManagerViewModel extends ChangeNotifier {
       _running.add(rc);
       notifyListeners();
 
-      final stdoutSub = process.stdout.transform(utf8.decoder).listen((line) {
+      final stdoutSub = process.stdout
+          .transform(StreamTransformer.fromHandlers(handleData: (data, sink) {
+        sink.add(utf8.decode(data, allowMalformed: true));
+      })).listen((line) {
         rc.output.write(line);
         notifyListeners();
       }, onError: (e) {
         print("Error decoding process output: $e");
       });
 
-      final stderrSub = process.stderr.transform(utf8.decoder).listen((line) {
+      final stderrSub = process.stderr
+          .transform(StreamTransformer.fromHandlers(handleData: (data, sink) {
+        sink.add(utf8.decode(data, allowMalformed: true));
+      })).listen((line) {
         rc.output.write('[stderr] $line');
         notifyListeners();
       });

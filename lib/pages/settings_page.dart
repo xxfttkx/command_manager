@@ -128,8 +128,29 @@ class _SettingsPageState extends State<SettingsPage> {
                 border: const OutlineInputBorder(),
                 hintText: AppLocalizations.of(context)!.argsTemplateHint,
               ),
-              onChanged: (_) =>
-                  settingsViewModel.setShellPath(_argsTemplateController.text),
+              onChanged: (_) => settingsViewModel
+                  .setArgsTemplate(_argsTemplateController.text),
+            ),
+          ),
+          const SizedBox(height: 16),
+          _SettingsCard(
+            title: AppLocalizations.of(context)!.commandDisplaySettings,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SwitchListTile(
+                  title: Text(AppLocalizations.of(context)!.newCommandOnTop),
+                  value: settingsViewModel.newCommandOnTop,
+                  onChanged: (val) => settingsViewModel.setNewCommandOnTop(val),
+                  contentPadding: EdgeInsets.zero,
+                ),
+                SwitchListTile(
+                  title: Text(AppLocalizations.of(context)!.runCommandOnTop),
+                  value: settingsViewModel.runCommandOnTop,
+                  onChanged: (val) => settingsViewModel.setRunCommandOnTop(val),
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ],
             ),
           ),
         ],

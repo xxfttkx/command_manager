@@ -9,27 +9,22 @@
   "cancel": "Cancel",
   "save": "Save",
   "nameAndCommandsRequired": "Name and commands cannot be empty",
-
   "searchCommand": "Search by name or content",
   "@searchCommand": {
     "description": "Hint text for the search input field"
   },
-
   "noMatchedCommand": "No matched commands",
   "@noMatchedCommand": {
     "description": "Text shown when no commands match the search"
   },
-
   "deleteConfirmTitle": "Confirm Deletion",
   "@deleteConfirmTitle": {
     "description": "Title of the delete confirmation dialog"
   },
-
   "deleteConfirmContent": "Are you sure you want to delete this command? This action cannot be undone.",
   "@deleteConfirmContent": {
     "description": "Content message of the delete confirmation dialog"
   },
-
   "deleteSuccessMessage": "Command \"{commandName}\" deleted successfully.",
   "@deleteSuccessMessage": {
     "description": "Snackbar message after successful deletion",
@@ -37,12 +32,10 @@
       "commandName": {}
     }
   },
-
   "addCommandTooltip": "Add Command",
   "@addCommandTooltip": {
     "description": "Tooltip text for the add command FAB"
   },
-
   "saveSuccessMessage": "Command \"{commandName}\" saved successfully.",
   "@saveSuccessMessage": {
     "description": "Snackbar message after successful save",
@@ -50,7 +43,6 @@
       "commandName": {}
     }
   },
-
   "duplicateCommandMessage": "Another command with name \"{commandName}\" already exists.",
   "@duplicateCommandMessage": {
     "description": "Snackbar error when duplicate command name is added",
@@ -66,14 +58,12 @@
     }
   },
   "endCommand": "Command \"{commandName}\" completed",
-  
   "@endCommand": {
     "description": "Message shown when a command finishes running",
     "placeholders": {
       "commandName": {}
     }
   },
-
   "run": "Run",
   "edit": "Edit",
   "delete": "Delete",
@@ -89,5 +79,8 @@
   "shellPathTitle": "Shell Path",
   "argsTemplateTitle": "Shell Argument Template",
   "shellPathHint": "e.g., powershell.exe or /bin/bash",
-  "argsTemplateHint": "e.g., -Command or -c"
+  "argsTemplateHint": "e.g., -Command or -c",
+  "commandDisplaySettings": "Command Display Settings",
+  "newCommandOnTop": "New commands appear on top",
+  "runCommandOnTop": "Move command to top after running"
 }
