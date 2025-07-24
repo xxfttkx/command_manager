@@ -122,10 +122,7 @@ class CommandManagerViewModel extends ChangeNotifier {
   Future<void> runCommand(CommandAction action) async {
     if (settings.runCommandOnTop) {
       final index = _commands.indexWhere((cmd) => cmd.name == action.name);
-      if (index != -1) {
-        final cmd = _commands.removeAt(index);
-        _commands.insert(0, cmd);
-      }
+      reorder(index, 0);
     }
     final shellPath = settings.shellPath;
     final argsTemplate = settings.argsTemplate;
