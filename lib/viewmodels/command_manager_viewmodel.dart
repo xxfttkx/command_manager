@@ -40,10 +40,12 @@ class CommandManagerViewModel extends ChangeNotifier {
 
   List<CommandAction> get filteredCommands {
     if (_filter.isEmpty) return _commands;
-    return _commands.where((c) {
-      return c.name.contains(_filter) ||
-          c.commands.any((cmd) => cmd.contains(_filter));
-    }).toList();
+    final filterLower = _filter.toLowerCase();
+    return _commands
+        .where((c) =>
+            c.name.toLowerCase().contains(filterLower) ||
+            c.commands.any((cmd) => cmd.toLowerCase().contains(filterLower)))
+        .toList();
   }
 
   Future<void> loadCommands() async {
