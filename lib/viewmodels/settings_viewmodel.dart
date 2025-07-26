@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:is_admin/is_admin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsViewModel extends ChangeNotifier {
@@ -11,6 +12,7 @@ class SettingsViewModel extends ChangeNotifier {
   String _argsTemplate = '-Command';
   bool _newCommandOnTop = false;
   bool _runCommandOnTop = false;
+  bool _isAdmin = false;
 
   Locale get locale => _locale;
   static const List<Color> presetColors = [
@@ -26,6 +28,7 @@ class SettingsViewModel extends ChangeNotifier {
   String get argsTemplate => _argsTemplate;
   bool get newCommandOnTop => _newCommandOnTop;
   bool get runCommandOnTop => _runCommandOnTop;
+  bool get isAdmin => _isAdmin;
 
   Future<void> load() async {
     _prefs = await SharedPreferences.getInstance();
@@ -37,7 +40,7 @@ class SettingsViewModel extends ChangeNotifier {
     _argsTemplate = _prefs.getString('args_template') ?? '-Command';
     _newCommandOnTop = _prefs.getBool('new_command_on_top') ?? false;
     _runCommandOnTop = _prefs.getBool('run_command_on_top') ?? false;
-    notifyListeners();
+    _isAdmin = IsAdmin.isAdmin;
   }
 
   Future<void> setLocale(Locale locale) async {
@@ -77,6 +80,11 @@ class SettingsViewModel extends ChangeNotifier {
   Future<void> setRunCommandOnTop(bool value) async {
     _runCommandOnTop = value;
     await _prefs.setBool('run_command_on_top', value);
+    notifyListeners();
+  }
+
+  Future<void> setIsAdmin(bool value) async {
+    _isAdmin = value;
     notifyListeners();
   }
 }

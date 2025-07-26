@@ -125,6 +125,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get argsTemplateHint => 'e.g., -Command or -c';
 
   @override
+  String get advancedSettings => 'Advanced Settings';
+
+  @override
   String get commandDisplaySettings => 'Command Display Settings';
 
   @override
@@ -132,4 +135,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get runCommandOnTop => 'Move command to top after running';
+
+  @override
+  String get isAdmin => 'Run as Administrator';
+
+  @override
+  String get adminSwitchNotSupported =>
+      'Switching administrator privileges is not supported';
 }

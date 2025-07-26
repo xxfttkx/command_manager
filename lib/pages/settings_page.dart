@@ -1,4 +1,5 @@
 import 'package:command_manager/gen/l10n/app_localizations.dart';
+import 'package:command_manager/widgets/app_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:command_manager/viewmodels/settings_viewmodel.dart';
@@ -134,7 +135,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           const SizedBox(height: 16),
           _SettingsCard(
-            title: AppLocalizations.of(context)!.commandDisplaySettings,
+            title: AppLocalizations.of(context)!.advancedSettings,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -148,6 +149,17 @@ class _SettingsPageState extends State<SettingsPage> {
                   title: Text(AppLocalizations.of(context)!.runCommandOnTop),
                   value: settingsViewModel.runCommandOnTop,
                   onChanged: (val) => settingsViewModel.setRunCommandOnTop(val),
+                  contentPadding: EdgeInsets.zero,
+                ),
+                SwitchListTile(
+                  title: Text(AppLocalizations.of(context)!.isAdmin),
+                  value: settingsViewModel.isAdmin,
+                  onChanged: (val) => {
+                    AppSnackbar.showTip(
+                      context,
+                      AppLocalizations.of(context)!.adminSwitchNotSupported,
+                    )
+                  },
                   contentPadding: EdgeInsets.zero,
                 ),
               ],

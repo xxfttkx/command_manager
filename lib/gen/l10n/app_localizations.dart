@@ -308,6 +308,12 @@ abstract class AppLocalizations {
   /// **'e.g., -Command or -c'**
   String get argsTemplateHint;
 
+  /// No description provided for @advancedSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced Settings'**
+  String get advancedSettings;
+
   /// No description provided for @commandDisplaySettings.
   ///
   /// In en, this message translates to:
@@ -325,6 +331,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Move command to top after running'**
   String get runCommandOnTop;
+
+  /// No description provided for @isAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Run as Administrator'**
+  String get isAdmin;
+
+  /// No description provided for @adminSwitchNotSupported.
+  ///
+  /// In en, this message translates to:
+  /// **'Switching administrator privileges is not supported'**
+  String get adminSwitchNotSupported;
 }
 
 class _AppLocalizationsDelegate

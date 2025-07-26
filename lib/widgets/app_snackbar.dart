@@ -9,6 +9,14 @@ class AppSnackbar {
     );
   }
 
+  static void showTip(BuildContext context, String message) {
+    _showSnackBar(
+      context,
+      message,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
+    );
+  }
+
   static void showError(BuildContext context, String message) {
     _showSnackBar(
       context,

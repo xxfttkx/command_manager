@@ -124,6 +124,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get argsTemplateHint => '例如 -Command 或 -c';
 
   @override
+  String get advancedSettings => '高级设置';
+
+  @override
   String get commandDisplaySettings => '命令显示设置';
 
   @override
@@ -131,4 +134,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get runCommandOnTop => '命令运行后显示在最上';
+
+  @override
+  String get isAdmin => '管理员权限';
+
+  @override
+  String get adminSwitchNotSupported => '不支持切换管理员权限';
 }

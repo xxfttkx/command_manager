@@ -80,7 +80,10 @@
   "argsTemplateTitle": "Shell Argument Template",
   "shellPathHint": "e.g., powershell.exe or /bin/bash",
   "argsTemplateHint": "e.g., -Command or -c",
+  "advancedSettings": "Advanced Settings",
   "commandDisplaySettings": "Command Display Settings",
   "newCommandOnTop": "New commands appear on top",
-  "runCommandOnTop": "Move command to top after running"
+  "runCommandOnTop": "Move command to top after running",
+  "isAdmin": "Run as Administrator",
+  "adminSwitchNotSupported":"Switching administrator privileges is not supported"
 }
