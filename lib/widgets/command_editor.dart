@@ -105,7 +105,7 @@ class _CommandEditorState extends State<CommandEditor> {
           onPressed: Navigator.of(context).pop,
           child: Text(AppLocalizations.of(context)!.cancel),
         ),
-        ElevatedButton(
+        FilledButton(
           onPressed: _submit,
           child: Text(AppLocalizations.of(context)!.save),
         ),

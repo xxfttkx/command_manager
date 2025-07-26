@@ -12,20 +12,41 @@ class CommandExecutionCard extends StatelessWidget {
   final RunningCommand rc;
   final ExecutionType type;
   const CommandExecutionCard({
-    Key? key,
+    super.key,
     required this.rc,
     required this.type,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    final vm = context.read<CommandManagerViewModel>(); // 替换成你的 ViewModel 类型
+    final vm = context.read<CommandManagerViewModel>();
     return GestureDetector(
       onLongPress: () {
         showDialog(
           context: context,
           builder: (_) => AlertDialog(
-            title: Text(rc.name),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    rc.name,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.copy),
+                  tooltip: 'Copy',
+                  onPressed: () {
+                    final textToCopy = rc.output
+                        .toString()
+                        .replaceAll(RegExp(r'\x1B\[[0-9;]*[a-zA-Z]'), '');
+                    Clipboard.setData(ClipboardData(text: textToCopy));
+                    AppSnackbar.show(context, 'Copied to clipboard');
+                  },
+                ),
+              ],
+            ),
             content: SingleChildScrollView(
               child: Text(
                 rc.output
@@ -34,18 +55,7 @@ class CommandExecutionCard extends StatelessWidget {
               ),
             ),
             actions: [
-              TextButton(
-                onPressed: () {
-                  final textToCopy = rc.output
-                      .toString()
-                      .replaceAll(RegExp(r'\x1B\[[0-9;]*[a-zA-Z]'), '');
-                  Clipboard.setData(ClipboardData(text: textToCopy));
-                  // 你可以用 ScaffoldMessenger 显示提示
-                  AppSnackbar.show(context, 'Copied to clipboard');
-                },
-                child: const Text('Copy'),
-              ),
-              TextButton(
+              FilledButton(
                 onPressed: () => Navigator.of(context).pop(),
                 child: Text(MaterialLocalizations.of(context).okButtonLabel),
               ),
