@@ -26,6 +26,19 @@ Future<void> initWindowManager() async {
   // 初始化 window_manager
   await windowManager.ensureInitialized();
 
+  // 设置初始窗口大小
+  await windowManager.setSize(const Size(1280, 720));
+
+  // 将窗口置于屏幕中央
+  await windowManager.setAlignment(Alignment.center);
+
+  // 可选：显示窗口
+  // await windowManager.show();
+  // await windowManager.focus();
+  // await windowManager.setAlwaysOnTop(true);
+  // await Future.delayed(const Duration(milliseconds: 100));
+  // await windowManager.setAlwaysOnTop(false); // 强制拉到前台
+
   // 设置窗口为可关闭监听
   windowManager.setPreventClose(true); // 重要！
 
