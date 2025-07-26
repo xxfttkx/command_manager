@@ -343,6 +343,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Switching administrator privileges is not supported'**
   String get adminSwitchNotSupported;
+
+  /// No description provided for @fontSizeFactorLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Font size factor'**
+  String get fontSizeFactorLabel;
 }
 
 class _AppLocalizationsDelegate

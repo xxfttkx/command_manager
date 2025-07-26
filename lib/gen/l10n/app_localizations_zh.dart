@@ -140,4 +140,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get adminSwitchNotSupported => '不支持切换管理员权限';
+
+  @override
+  String get fontSizeFactorLabel => '字体缩放比例';
 }

@@ -85,5 +85,6 @@
   "newCommandOnTop": "New commands appear on top",
   "runCommandOnTop": "Move command to top after running",
   "isAdmin": "Run as Administrator",
-  "adminSwitchNotSupported":"Switching administrator privileges is not supported"
+  "adminSwitchNotSupported":"Switching administrator privileges is not supported",
+  "fontSizeFactorLabel": "Font size factor"
 }

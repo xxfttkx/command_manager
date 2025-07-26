@@ -13,6 +13,7 @@ class SettingsViewModel extends ChangeNotifier {
   bool _newCommandOnTop = false;
   bool _runCommandOnTop = false;
   bool _isAdmin = false;
+  double _fontSizeFactor = 1.0;
 
   Locale get locale => _locale;
   static const List<Color> presetColors = [
@@ -29,6 +30,7 @@ class SettingsViewModel extends ChangeNotifier {
   bool get newCommandOnTop => _newCommandOnTop;
   bool get runCommandOnTop => _runCommandOnTop;
   bool get isAdmin => _isAdmin;
+  double get fontSizeFactor => _fontSizeFactor;
 
   Future<void> load() async {
     _prefs = await SharedPreferences.getInstance();
@@ -41,6 +43,7 @@ class SettingsViewModel extends ChangeNotifier {
     _newCommandOnTop = _prefs.getBool('new_command_on_top') ?? false;
     _runCommandOnTop = _prefs.getBool('run_command_on_top') ?? false;
     _isAdmin = IsAdmin.isAdmin;
+    _fontSizeFactor = _prefs.getDouble('font_size_factor') ?? 1.0;
   }
 
   Future<void> setLocale(Locale locale) async {
@@ -85,6 +88,12 @@ class SettingsViewModel extends ChangeNotifier {
 
   Future<void> setIsAdmin(bool value) async {
     _isAdmin = value;
+    notifyListeners();
+  }
+
+  Future<void> setFontSizeFactor(double value) async {
+    _fontSizeFactor = value;
+    await _prefs.setDouble('font_size_factor', value);
     notifyListeners();
   }
 }

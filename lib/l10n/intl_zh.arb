@@ -42,5 +42,6 @@
   "newCommandOnTop": "新增命令显示在最上",
   "runCommandOnTop": "命令运行后显示在最上",
   "isAdmin": "管理员权限",
-  "adminSwitchNotSupported": "不支持切换管理员权限"
+  "adminSwitchNotSupported": "不支持切换管理员权限",
+  "fontSizeFactorLabel": "字体缩放比例"
 }

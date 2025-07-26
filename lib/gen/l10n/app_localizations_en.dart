@@ -142,4 +142,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get adminSwitchNotSupported =>
       'Switching administrator privileges is not supported';
+
+  @override
+  String get fontSizeFactorLabel => 'Font size factor';
 }

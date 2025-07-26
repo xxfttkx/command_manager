@@ -151,6 +151,11 @@ class _SettingsPageState extends State<SettingsPage> {
                   onChanged: (val) => settingsViewModel.setRunCommandOnTop(val),
                   contentPadding: EdgeInsets.zero,
                 ),
+                fontSizeFactorSlider(
+                  context: context,
+                  fontSizeFactor: settingsViewModel.fontSizeFactor,
+                  onChanged: (val) => settingsViewModel.setFontSizeFactor(val),
+                ),
                 SwitchListTile(
                   title: Text(AppLocalizations.of(context)!.isAdmin),
                   value: settingsViewModel.isAdmin,
@@ -198,4 +203,27 @@ class _SettingsCard extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget fontSizeFactorSlider({
+  required BuildContext context,
+  required double fontSizeFactor,
+  required ValueChanged<double> onChanged,
+}) {
+  return ListTile(
+    contentPadding: EdgeInsets.zero,
+    title: Text(AppLocalizations.of(context)!.fontSizeFactorLabel),
+    subtitle: Slider(
+      min: 0.5,
+      max: 3.0,
+      divisions: 25,
+      value: fontSizeFactor,
+      label: fontSizeFactor.toStringAsFixed(2),
+      onChanged: onChanged,
+    ),
+    trailing: Text(
+      fontSizeFactor.toStringAsFixed(2),
+      style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+    ),
+  );
 }

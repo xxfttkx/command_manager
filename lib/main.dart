@@ -120,7 +120,7 @@ class MyApp extends StatelessWidget {
               // ??const Color.fromARGB(255, 21, 255, 25),
               ),
           textTheme: Theme.of(context).textTheme.apply(
-                fontSizeFactor: 1.0, // 缩放字体大小
+                fontSizeFactor: settingsViewModel.fontSizeFactor, // 缩放字体大小
               ),
         ),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
