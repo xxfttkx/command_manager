@@ -119,6 +119,9 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: settingsViewModel.color
               // ??const Color.fromARGB(255, 21, 255, 25),
               ),
+          textTheme: Theme.of(context).textTheme.apply(
+                fontSizeFactor: 1.0, // 缩放字体大小
+              ),
         ),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,

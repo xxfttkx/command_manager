@@ -64,11 +64,10 @@ class CommandCard extends StatelessWidget {
             ...action.commands.map(
               (cmd) => Text(
                 '> $cmd',
-                style: TextStyle(
-                  fontFamily: 'monospace',
-                  fontSize: 13,
-                  color: Colors.grey[700],
-                ),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontFamily: 'monospace',
+                      color: Colors.grey[700],
+                    ),
               ),
             ),
           ],
