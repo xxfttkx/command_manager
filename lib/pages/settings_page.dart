@@ -51,31 +51,9 @@ class _SettingsPageState extends State<SettingsPage> {
             settingsViewModel: settingsViewModel,
           ),
           const SizedBox(height: 16),
-          _SettingsCard(
-            title: AppLocalizations.of(context)!.language,
-            child: DropdownButton<Locale>(
-              value: settingsViewModel.locale,
-              onChanged: (Locale? newLocale) {
-                if (newLocale != null) {
-                  settingsViewModel.setLocale(newLocale);
-                }
-              },
-              items: const [
-                DropdownMenuItem(
-                  value: Locale('zh'),
-                  child: Text('简体中文'),
-                ),
-                DropdownMenuItem(
-                  value: Locale('en'),
-                  child: Text('English'),
-                ),
-              ],
-              icon: const Icon(Icons.language),
-              style: const TextStyle(fontSize: 16, color: Colors.black),
-              dropdownColor: Theme.of(context).colorScheme.secondaryContainer,
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-              underline: Container(height: 0), // 去掉下划线
-            ),
+          languageCard(
+            context: context,
+            settingsViewModel: settingsViewModel,
           ),
           const SizedBox(height: 16),
           _SettingsCard(
@@ -213,6 +191,37 @@ Widget themeColorCard(
   );
 }
 
+Widget languageCard(
+    {required BuildContext context,
+    required SettingsViewModel settingsViewModel}) {
+  return _SettingsCard(
+    title: AppLocalizations.of(context)!.language,
+    child: DropdownButton<Locale>(
+      value: settingsViewModel.locale,
+      onChanged: (Locale? newLocale) {
+        if (newLocale != null) {
+          settingsViewModel.setLocale(newLocale);
+        }
+      },
+      items: const [
+        DropdownMenuItem(
+          value: Locale('zh'),
+          child: Text('简体中文'),
+        ),
+        DropdownMenuItem(
+          value: Locale('en'),
+          child: Text('English'),
+        ),
+      ],
+      icon: const Icon(Icons.language),
+      style: Theme.of(context).textTheme.bodyMedium,
+      dropdownColor: Theme.of(context).colorScheme.secondaryContainer,
+      borderRadius: BorderRadius.all(Radius.circular(12)),
+      underline: Container(height: 0), // 去掉下划线
+    ),
+  );
+}
+
 Widget fontSizeFactorSlider({
   required BuildContext context,
   required double fontSizeFactor,
@@ -234,9 +243,7 @@ Widget fontSizeFactorSlider({
         onChanged(value); // 通知外部值改变
       },
     ),
-    trailing: Text(
-      fontSizeFactor.toStringAsFixed(2),
-      style: TextStyle(fontSize: 14, color: Colors.grey[600]),
-    ),
+    trailing: Text(fontSizeFactor.toStringAsFixed(2),
+        style: Theme.of(context).textTheme.bodyMedium),
   );
 }
