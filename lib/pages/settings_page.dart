@@ -102,7 +102,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
               icon: const Icon(Icons.language),
               style: const TextStyle(fontSize: 16, color: Colors.black),
-              dropdownColor: Colors.white,
+              dropdownColor: Theme.of(context).colorScheme.secondaryContainer,
               borderRadius: BorderRadius.all(Radius.circular(12)),
               underline: Container(height: 0), // 去掉下划线
             ),
