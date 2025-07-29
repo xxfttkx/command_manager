@@ -46,39 +46,9 @@ class _SettingsPageState extends State<SettingsPage> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          _SettingsCard(
-            title: AppLocalizations.of(context)!.themeColor,
-            child: Wrap(
-              spacing: 12,
-              runSpacing: 12,
-              children: List.generate(
-                SettingsViewModel.presetColors.length,
-                (i) {
-                  final color = SettingsViewModel.presetColors[i];
-                  final isSelected = color == settingsViewModel.color;
-
-                  return GestureDetector(
-                    onTap: () => settingsViewModel.setColorIndex(i),
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: color,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: isSelected ? Colors.black : Colors.transparent,
-                          width: 3,
-                        ),
-                      ),
-                      child: isSelected
-                          ? const Icon(Icons.check,
-                              color: Colors.white, size: 20)
-                          : null,
-                    ),
-                  );
-                },
-              ),
-            ),
+          themeColorCard(
+            context: context,
+            settingsViewModel: settingsViewModel,
           ),
           const SizedBox(height: 16),
           _SettingsCard(
@@ -205,6 +175,44 @@ class _SettingsCard extends StatelessWidget {
   }
 }
 
+Widget themeColorCard(
+    {required BuildContext context,
+    required SettingsViewModel settingsViewModel}) {
+  return _SettingsCard(
+    title: AppLocalizations.of(context)!.themeColor,
+    child: Wrap(
+      spacing: 12,
+      runSpacing: 12,
+      children: List.generate(
+        SettingsViewModel.presetColors.length,
+        (i) {
+          final color = SettingsViewModel.presetColors[i];
+          final isSelected = color == settingsViewModel.color;
+
+          return GestureDetector(
+            onTap: () => settingsViewModel.setColorIndex(i),
+            child: Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: color,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: isSelected ? Colors.black : Colors.transparent,
+                  width: 3,
+                ),
+              ),
+              child: isSelected
+                  ? const Icon(Icons.check, color: Colors.white, size: 20)
+                  : null,
+            ),
+          );
+        },
+      ),
+    ),
+  );
+}
+
 Widget fontSizeFactorSlider({
   required BuildContext context,
   required double fontSizeFactor,
@@ -219,7 +227,12 @@ Widget fontSizeFactorSlider({
       divisions: 25,
       value: fontSizeFactor,
       label: fontSizeFactor.toStringAsFixed(2),
-      onChanged: onChanged,
+      onChanged: (value) {
+        // fontSizeFactor = value;
+      },
+      onChangeEnd: (value) {
+        onChanged(value); // 通知外部值改变
+      },
     ),
     trailing: Text(
       fontSizeFactor.toStringAsFixed(2),
