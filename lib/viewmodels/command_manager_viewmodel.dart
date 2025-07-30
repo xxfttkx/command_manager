@@ -148,7 +148,9 @@ class CommandManagerViewModel extends ChangeNotifier {
           .transform(StreamTransformer.fromHandlers(handleData: (data, sink) {
         sink.add(utf8.decode(data, allowMalformed: true));
       })).listen((line) {
-        rc.lines.add('$line');
+        final output = processString('$line');
+        if (output.isEmpty) return;
+        rc.lines.add(output);
         rc.count++;
         if (rc.lines.length <= 5) {
           notifyListeners();
@@ -203,5 +205,9 @@ class CommandManagerViewModel extends ChangeNotifier {
     // 从追踪列表中移除
     _running.remove(target);
     notifyListeners();
+  }
+
+  String processString(String s) {
+    return s.replaceAll(RegExp(r'\x1B\[[0-9;]*[a-zA-Z]'), '').trim();
   }
 }

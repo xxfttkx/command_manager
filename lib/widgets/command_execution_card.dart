@@ -24,56 +24,9 @@ class CommandExecutionCard extends StatelessWidget {
       onLongPress: () {
         showDialog(
           context: context,
-          builder: (_) => AlertDialog(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Text(
-                    rc.name,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.copy),
-                  tooltip: 'Copy',
-                  onPressed: () {
-                    final textToCopy = rc.lines
-                        .map((line) => line.replaceAll(
-                            RegExp(r'\x1B\[[0-9;]*[a-zA-Z]'), ''))
-                        .join('');
-                    Clipboard.setData(ClipboardData(text: textToCopy));
-                    AppSnackbar.show(context, 'Copied to clipboard');
-                  },
-                ),
-              ],
-            ),
-            content: AlertDialog(
-              content: SizedBox(
-                height: 300,
-                width: double.maxFinite, // 避免宽度约束异常
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: ClampingScrollPhysics(),
-                  itemCount: rc.lines.length,
-                  itemBuilder: (context, index) {
-                    final cleanLine = rc.lines[index]
-                        .replaceAll(RegExp(r'\x1B\[[0-9;]*[a-zA-Z]'), '')
-                        .trim();
-                    if (cleanLine.isEmpty) {
-                      return const SizedBox.shrink(); // 空行不渲染占位
-                    }
-                    return Text(cleanLine);
-                  },
-                ),
-              ),
-            ),
-            actions: [
-              FilledButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(MaterialLocalizations.of(context).okButtonLabel),
-              ),
-            ],
+          builder: (_) => ProcessOutputDialog(
+            title: rc.name,
+            lines: rc.lines,
           ),
         );
       },
@@ -88,11 +41,7 @@ class CommandExecutionCard extends StatelessWidget {
               Text(
                   '${AppLocalizations.of(context)!.startTime}: ${rc.startTime}'),
               Text(
-                rc.lines
-                    .take(5)
-                    .map((line) =>
-                        line.replaceAll(RegExp(r'\x1B\[[0-9;]*[a-zA-Z]'), ''))
-                    .join(''),
+                rc.lines.take(5).join(''),
                 maxLines: 5,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -119,6 +68,64 @@ class CommandExecutionCard extends StatelessWidget {
                   }),
         ),
       ),
+    );
+  }
+}
+
+class ProcessOutputDialog extends StatelessWidget {
+  final String title;
+  final List<String> lines;
+
+  const ProcessOutputDialog({
+    super.key,
+    required this.title,
+    required this.lines,
+  });
+
+  String get _cleanedText => lines.where((line) => line.isNotEmpty).join('');
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = ScrollController();
+    return AlertDialog(
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Text(title, overflow: TextOverflow.ellipsis),
+          ),
+          IconButton(
+            icon: const Icon(Icons.copy),
+            tooltip: 'Copy',
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: _cleanedText));
+              AppSnackbar.show(context, 'Copied to clipboard');
+            },
+          ),
+        ],
+      ),
+      content: SizedBox(
+        height: 300,
+        width: 500,
+        child: Scrollbar(
+          controller: controller,
+          child: ListView.builder(
+            controller: controller,
+            physics: const ClampingScrollPhysics(),
+            itemCount: lines.length,
+            itemBuilder: (context, index) {
+              final line = lines[index];
+              return Text(line);
+            },
+          ),
+        ),
+      ),
+      actions: [
+        FilledButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(MaterialLocalizations.of(context).okButtonLabel),
+        ),
+      ],
     );
   }
 }
