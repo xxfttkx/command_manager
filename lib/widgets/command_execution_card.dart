@@ -38,20 +38,34 @@ class CommandExecutionCard extends StatelessWidget {
                   icon: const Icon(Icons.copy),
                   tooltip: 'Copy',
                   onPressed: () {
-                    final textToCopy = rc.output
-                        .toString()
-                        .replaceAll(RegExp(r'\x1B\[[0-9;]*[a-zA-Z]'), '');
+                    final textToCopy = rc.lines
+                        .map((line) => line.replaceAll(
+                            RegExp(r'\x1B\[[0-9;]*[a-zA-Z]'), ''))
+                        .join('');
                     Clipboard.setData(ClipboardData(text: textToCopy));
                     AppSnackbar.show(context, 'Copied to clipboard');
                   },
                 ),
               ],
             ),
-            content: SingleChildScrollView(
-              child: Text(
-                rc.output
-                    .toString()
-                    .replaceAll(RegExp(r'\x1B\[[0-9;]*[a-zA-Z]'), ''),
+            content: AlertDialog(
+              content: SizedBox(
+                height: 300,
+                width: double.maxFinite, // 避免宽度约束异常
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: ClampingScrollPhysics(),
+                  itemCount: rc.lines.length,
+                  itemBuilder: (context, index) {
+                    final cleanLine = rc.lines[index]
+                        .replaceAll(RegExp(r'\x1B\[[0-9;]*[a-zA-Z]'), '')
+                        .trim();
+                    if (cleanLine.isEmpty) {
+                      return const SizedBox.shrink(); // 空行不渲染占位
+                    }
+                    return Text(cleanLine);
+                  },
+                ),
               ),
             ),
             actions: [
@@ -74,9 +88,11 @@ class CommandExecutionCard extends StatelessWidget {
               Text(
                   '${AppLocalizations.of(context)!.startTime}: ${rc.startTime}'),
               Text(
-                rc.output
-                    .toString()
-                    .replaceAll(RegExp(r'\x1B\[[0-9;]*[a-zA-Z]'), ''),
+                rc.lines
+                    .take(5)
+                    .map((line) =>
+                        line.replaceAll(RegExp(r'\x1B\[[0-9;]*[a-zA-Z]'), ''))
+                    .join(''),
                 maxLines: 5,
                 overflow: TextOverflow.ellipsis,
               ),

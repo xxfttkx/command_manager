@@ -148,8 +148,11 @@ class CommandManagerViewModel extends ChangeNotifier {
           .transform(StreamTransformer.fromHandlers(handleData: (data, sink) {
         sink.add(utf8.decode(data, allowMalformed: true));
       })).listen((line) {
-        rc.output.write(line);
-        notifyListeners();
+        rc.lines.add('$line');
+        rc.count++;
+        if (rc.lines.length <= 5) {
+          notifyListeners();
+        }
       }, onError: (e) {
         print("Error decoding process output: $e");
       });
@@ -158,7 +161,7 @@ class CommandManagerViewModel extends ChangeNotifier {
           .transform(StreamTransformer.fromHandlers(handleData: (data, sink) {
         sink.add(utf8.decode(data, allowMalformed: true));
       })).listen((line) {
-        rc.output.write('[stderr] $line');
+        rc.lines.add('[stderr] $line');
         notifyListeners();
       });
 
@@ -179,7 +182,7 @@ class CommandManagerViewModel extends ChangeNotifier {
         process: null,
         startTime: DateTime.now(),
       );
-      rc.output.write('[error] Error running command: $e');
+      rc.lines.add('[error] Error running command: $e');
       _finishedCommands.add(rc);
       notifyListeners();
     }

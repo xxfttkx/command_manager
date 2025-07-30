@@ -5,8 +5,8 @@ class RunningCommand {
   final String name;
   final Process? process;
   final DateTime startTime;
-  StringBuffer output = StringBuffer();
-
+  List<String> lines = [];
+  int count = 0;
   RunningCommand({
     required this.pid,
     required this.name,
