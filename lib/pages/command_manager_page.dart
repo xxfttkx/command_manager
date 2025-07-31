@@ -1,4 +1,5 @@
 import 'package:command_manager/gen/l10n/app_localizations.dart';
+import 'package:command_manager/utils.dart' as utils;
 import 'package:command_manager/widgets/app_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -101,55 +102,72 @@ class _CommandManagerPageState extends State<CommandManagerPage> {
                       return KeyedSubtree(
                         key: ValueKey(action.name),
                         child: CommandCard(
-                            action: action,
-                            onEdit: () => _openEditor(initial: action),
-                            onDelete: () async {
-                              final confirmed = await showDialog<bool>(
-                                context: context,
-                                builder: (ctx) => AlertDialog(
-                                  title: Text(AppLocalizations.of(context)!
-                                      .deleteConfirmTitle),
-                                  content: Text(AppLocalizations.of(context)!
-                                      .deleteConfirmContent),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.of(ctx).pop(false),
-                                      child: Text(
-                                          AppLocalizations.of(context)!.cancel),
-                                    ),
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.of(ctx).pop(true),
-                                      child: Text(
-                                          AppLocalizations.of(context)!.delete,
-                                          style: TextStyle(color: Colors.red)),
-                                    ),
-                                  ],
-                                ),
-                              );
-
-                              if (confirmed == true && context.mounted) {
-                                vm.deleteCommand(action);
+                          action: action,
+                          onAction: (actionType) async {
+                            switch (actionType) {
+                              case CommandCardActionType.run:
                                 AppSnackbar.show(
                                     context,
                                     AppLocalizations.of(context)!
-                                        .deleteSuccessMessage(action.name));
-                              }
-                            },
-                            onRun: () async {
-                              AppSnackbar.show(
-                                  context,
-                                  AppLocalizations.of(context)!
-                                      .startCommand(action.name));
-                              await vm.runCommand(action);
-                              if (context.mounted) {
-                                AppSnackbar.show(
-                                    context,
-                                    AppLocalizations.of(context)!
-                                        .endCommand(action.name));
-                              }
-                            }),
+                                        .startCommand(action.name));
+                                await vm.runCommand(action);
+                                if (context.mounted) {
+                                  AppSnackbar.show(
+                                      context,
+                                      AppLocalizations.of(context)!
+                                          .endCommand(action.name));
+                                }
+                                break;
+                              case CommandCardActionType.edit:
+                                _openEditor(initial: action);
+                                break;
+                              case CommandCardActionType.delete:
+                                final confirmed = await showDialog<bool>(
+                                  context: context,
+                                  builder: (ctx) => AlertDialog(
+                                    title: Text(AppLocalizations.of(context)!
+                                        .deleteConfirmTitle),
+                                    content: Text(AppLocalizations.of(context)!
+                                        .deleteConfirmContent),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.of(ctx).pop(false),
+                                        child: Text(
+                                            AppLocalizations.of(context)!
+                                                .cancel),
+                                      ),
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.of(ctx).pop(true),
+                                        child: Text(
+                                            AppLocalizations.of(context)!
+                                                .delete,
+                                            style:
+                                                TextStyle(color: Colors.red)),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                                if (confirmed == true && context.mounted) {
+                                  vm.deleteCommand(action);
+                                  AppSnackbar.show(
+                                      context,
+                                      AppLocalizations.of(context)!
+                                          .deleteSuccessMessage(action.name));
+                                }
+                                break;
+                              case CommandCardActionType.copyText:
+                                utils.copyToClipboard(
+                                    action.commands.join('\n'));
+                                break;
+                              case CommandCardActionType.duplicate:
+                                vm.duplicateCommand(action);
+                                break;
+                              // 其他 case...
+                            }
+                          },
+                        ),
                       );
                     },
                   ),

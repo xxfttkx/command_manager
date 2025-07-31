@@ -2,18 +2,16 @@ import 'package:command_manager/gen/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import '../models/command_action.dart';
 
+enum CommandCardActionType { run, edit, delete, copyText, duplicate }
+
 class CommandCard extends StatelessWidget {
   final CommandAction action;
-  final VoidCallback onEdit;
-  final VoidCallback onDelete;
-  final VoidCallback onRun;
+  final void Function(CommandCardActionType) onAction;
 
   const CommandCard({
     super.key,
     required this.action,
-    required this.onEdit,
-    required this.onDelete,
-    required this.onRun,
+    required this.onAction,
   });
 
   @override
@@ -39,17 +37,28 @@ class CommandCard extends StatelessWidget {
                     IconButton(
                       icon: const Icon(Icons.play_arrow),
                       tooltip: AppLocalizations.of(context)!.run,
-                      onPressed: onRun,
+                      onPressed: () => onAction(CommandCardActionType.run),
                     ),
                     IconButton(
                       icon: const Icon(Icons.edit),
                       tooltip: AppLocalizations.of(context)!.edit,
-                      onPressed: onEdit,
+                      onPressed: () => onAction(CommandCardActionType.edit),
                     ),
                     IconButton(
                       icon: const Icon(Icons.delete),
                       tooltip: AppLocalizations.of(context)!.delete,
-                      onPressed: onDelete,
+                      onPressed: () => onAction(CommandCardActionType.delete),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.copy),
+                      // tooltip: AppLocalizations.of(context)!.copy,
+                      onPressed: () => onAction(CommandCardActionType.copyText),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.library_add),
+                      // tooltip: AppLocalizations.of(context)!.duplicate,
+                      onPressed: () =>
+                          onAction(CommandCardActionType.duplicate),
                     ),
                   ],
                 ),
