@@ -54,6 +54,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get scrollToTopTooltip => 'Scroll to top';
+
+  @override
   String get addCommandTooltip => 'Add Command';
 
   @override

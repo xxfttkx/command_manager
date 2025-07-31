@@ -53,6 +53,9 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String get scrollToTopTooltip => '回到顶部';
+
+  @override
   String get addCommandTooltip => '添加命令';
 
   @override

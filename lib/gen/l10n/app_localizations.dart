@@ -182,6 +182,12 @@ abstract class AppLocalizations {
   /// **'Command \"{commandName}\" deleted successfully.'**
   String deleteSuccessMessage(Object commandName);
 
+  /// No description provided for @scrollToTopTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Scroll to top'**
+  String get scrollToTopTooltip;
+
   /// Tooltip text for the add command FAB
   ///
   /// In en, this message translates to:

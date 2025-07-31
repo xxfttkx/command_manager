@@ -17,13 +17,22 @@ class CommandManagerPage extends StatefulWidget {
 }
 
 class _CommandManagerPageState extends State<CommandManagerPage> {
+  late final ScrollController _scrollController;
+
   @override
   void initState() {
     super.initState();
+    _scrollController = ScrollController();
     // 初次加载配置
     Future.microtask(() {
       context.read<CommandManagerViewModel>().loadCommands();
     });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   void _openEditor({CommandAction? initial}) {
@@ -90,6 +99,7 @@ class _CommandManagerPageState extends State<CommandManagerPage> {
                 ? Center(
                     child: Text(AppLocalizations.of(context)!.noMatchedCommand))
                 : ReorderableListView.builder(
+                    scrollController: _scrollController,
                     itemCount: commands.length,
                     onReorder: (oldIndex, newIndex) {
                       vm.reorder(oldIndex, newIndex);
@@ -174,10 +184,34 @@ class _CommandManagerPageState extends State<CommandManagerPage> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _openEditor(),
-        tooltip: AppLocalizations.of(context)!.addCommandTooltip,
-        child: const Icon(Icons.add),
+      floatingActionButton: Stack(
+        alignment: Alignment.bottomRight,
+        children: [
+          // 滚动到顶部按钮
+          Padding(
+            padding: const EdgeInsets.only(bottom: 72.0), // 距离加号按钮的距离
+            child: FloatingActionButton(
+              heroTag: 'scrollToTop',
+              onPressed: () {
+                // 使用 ScrollController 来滚动
+                _scrollController.animateTo(
+                  0,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeOut,
+                );
+              },
+              tooltip: AppLocalizations.of(context)!.scrollToTopTooltip,
+              child: const Icon(Icons.vertical_align_top),
+            ),
+          ),
+          // 原来的加号按钮
+          FloatingActionButton(
+            heroTag: 'addCommand',
+            onPressed: _openEditor,
+            tooltip: AppLocalizations.of(context)!.addCommandTooltip,
+            child: const Icon(Icons.add),
+          ),
+        ],
       ),
     );
   }

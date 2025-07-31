@@ -32,6 +32,7 @@
       "commandName": {}
     }
   },
+  "scrollToTopTooltip": "Scroll to top",
   "addCommandTooltip": "Add Command",
   "@addCommandTooltip": {
     "description": "Tooltip text for the add command FAB"
