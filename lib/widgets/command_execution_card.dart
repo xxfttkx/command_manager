@@ -41,7 +41,7 @@ class CommandExecutionCard extends StatelessWidget {
               Text(
                   '${AppLocalizations.of(context)!.startTime}: ${rc.startTime}'),
               Text(
-                rc.lines.take(5).join(''),
+                rc.lines.take(5).map((line) => line.trimRight()).join('\n'),
                 maxLines: 5,
                 overflow: TextOverflow.ellipsis,
               ),
