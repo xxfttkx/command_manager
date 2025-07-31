@@ -119,6 +119,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get language => 'Language';
 
   @override
+  String get shellSettingsTitle => 'Shell Settings';
+
+  @override
   String get shellPathTitle => 'Shell Path';
 
   @override

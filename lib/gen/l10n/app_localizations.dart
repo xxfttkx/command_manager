@@ -296,6 +296,12 @@ abstract class AppLocalizations {
   /// **'Language'**
   String get language;
 
+  /// No description provided for @shellSettingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Shell Settings'**
+  String get shellSettingsTitle;
+
   /// No description provided for @shellPathTitle.
   ///
   /// In en, this message translates to:

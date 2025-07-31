@@ -118,6 +118,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get language => '语言';
 
   @override
+  String get shellSettingsTitle => 'Shell 设置';
+
+  @override
   String get shellPathTitle => 'Shell 执行器路径';
 
   @override

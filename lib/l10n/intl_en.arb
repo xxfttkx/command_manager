@@ -78,6 +78,7 @@
   "tabSettings": "Settings",
   "themeColor": "Theme Color",
   "language": "Language",
+  "shellSettingsTitle": "Shell Settings",
   "shellPathTitle": "Shell Path",
   "argsTemplateTitle": "Shell Argument Template",
   "shellPathHint": "e.g., powershell.exe or /bin/bash",

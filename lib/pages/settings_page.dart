@@ -56,31 +56,11 @@ class _SettingsPageState extends State<SettingsPage> {
             settingsViewModel: settingsViewModel,
           ),
           const SizedBox(height: 16),
-          _SettingsCard(
-            title: AppLocalizations.of(context)!.shellPathTitle,
-            child: TextField(
-              controller: _shellPathController,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                hintText: AppLocalizations.of(context)!.shellPathHint,
-              ),
-              onChanged: (_) =>
-                  settingsViewModel.setShellPath(_shellPathController.text),
-            ),
-          ),
-          const SizedBox(height: 16),
-          _SettingsCard(
-            title: AppLocalizations.of(context)!.argsTemplateTitle,
-            child: TextField(
-              controller: _argsTemplateController,
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(),
-                hintText: AppLocalizations.of(context)!.argsTemplateHint,
-              ),
-              onChanged: (_) => settingsViewModel
-                  .setArgsTemplate(_argsTemplateController.text),
-            ),
-          ),
+          shellCard(
+              context: context,
+              settingsViewModel: settingsViewModel,
+              shellPathController: _shellPathController,
+              argsTemplateController: _argsTemplateController),
           const SizedBox(height: 16),
           _SettingsCard(
             title: AppLocalizations.of(context)!.advancedSettings,
@@ -218,6 +198,43 @@ Widget languageCard(
       dropdownColor: Theme.of(context).colorScheme.secondaryContainer,
       borderRadius: BorderRadius.all(Radius.circular(12)),
       underline: Container(height: 0), // 去掉下划线
+    ),
+  );
+}
+
+Widget shellCard(
+    {required BuildContext context,
+    required SettingsViewModel settingsViewModel,
+    required TextEditingController shellPathController,
+    required TextEditingController argsTemplateController}) {
+  return _SettingsCard(
+    title: AppLocalizations.of(context)!.shellSettingsTitle,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 8),
+        TextField(
+          controller: shellPathController,
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(),
+            hintText: AppLocalizations.of(context)!.shellPathHint,
+            labelText: AppLocalizations.of(context)!.shellPathTitle,
+          ),
+          onChanged: (_) =>
+              settingsViewModel.setShellPath(shellPathController.text),
+        ),
+        const SizedBox(height: 16),
+        TextField(
+          controller: argsTemplateController,
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(),
+            hintText: AppLocalizations.of(context)!.argsTemplateHint,
+            labelText: AppLocalizations.of(context)!.argsTemplateTitle,
+          ),
+          onChanged: (_) =>
+              settingsViewModel.setArgsTemplate(argsTemplateController.text),
+        ),
+      ],
     ),
   );
 }
