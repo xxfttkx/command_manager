@@ -24,6 +24,8 @@
   "run": "运行",
   "edit": "编辑",
   "delete": "删除",
+  "copy":"复制",
+  "duplicate":"创建副本",
   "runningCommands": "正在运行的命令",
   "noRunningCommands": "暂无正在运行的命令",
   "finishedCommands": "已完成的命令",

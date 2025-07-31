@@ -67,6 +67,8 @@
   "run": "Run",
   "edit": "Edit",
   "delete": "Delete",
+  "copy":"Copy",
+  "duplicate":"Duplicate",
   "runningCommands": "Running Commands",
   "noRunningCommands": "No running commands",
   "finishedCommands": "Finished Commands",

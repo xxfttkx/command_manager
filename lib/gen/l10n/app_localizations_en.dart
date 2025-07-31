@@ -86,6 +86,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get delete => 'Delete';
 
   @override
+  String get copy => 'Copy';
+
+  @override
+  String get duplicate => 'Duplicate';
+
+  @override
   String get runningCommands => 'Running Commands';
 
   @override

@@ -41,7 +41,7 @@ class CommandCard extends StatelessWidget {
                     ),
                     IconButton(
                       icon: const Icon(Icons.copy),
-                      // tooltip: AppLocalizations.of(context)!.copy,
+                      tooltip: AppLocalizations.of(context)!.copy,
                       onPressed: () => onAction(CommandCardActionType.copyText),
                     ),
                     IconButton(
@@ -51,7 +51,7 @@ class CommandCard extends StatelessWidget {
                     ),
                     IconButton(
                       icon: const Icon(Icons.library_add),
-                      // tooltip: AppLocalizations.of(context)!.duplicate,
+                      tooltip: AppLocalizations.of(context)!.duplicate,
                       onPressed: () =>
                           onAction(CommandCardActionType.duplicate),
                     ),

@@ -85,6 +85,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get delete => '删除';
 
   @override
+  String get copy => '复制';
+
+  @override
+  String get duplicate => '创建副本';
+
+  @override
   String get runningCommands => '正在运行的命令';
 
   @override
