@@ -40,25 +40,25 @@ class CommandCard extends StatelessWidget {
                       onPressed: () => onAction(CommandCardActionType.run),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.edit),
-                      tooltip: AppLocalizations.of(context)!.edit,
-                      onPressed: () => onAction(CommandCardActionType.edit),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.delete),
-                      tooltip: AppLocalizations.of(context)!.delete,
-                      onPressed: () => onAction(CommandCardActionType.delete),
-                    ),
-                    IconButton(
                       icon: const Icon(Icons.copy),
                       // tooltip: AppLocalizations.of(context)!.copy,
                       onPressed: () => onAction(CommandCardActionType.copyText),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.edit),
+                      tooltip: AppLocalizations.of(context)!.edit,
+                      onPressed: () => onAction(CommandCardActionType.edit),
                     ),
                     IconButton(
                       icon: const Icon(Icons.library_add),
                       // tooltip: AppLocalizations.of(context)!.duplicate,
                       onPressed: () =>
                           onAction(CommandCardActionType.duplicate),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.delete),
+                      tooltip: AppLocalizations.of(context)!.delete,
+                      onPressed: () => onAction(CommandCardActionType.delete),
                     ),
                   ],
                 ),
