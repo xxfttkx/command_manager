@@ -87,6 +87,9 @@ class ProcessOutputDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = ScrollController();
+    final mediaQuery = MediaQuery.of(context);
+    final maxHeight = mediaQuery.size.height * 0.6;
+    final maxWidth = mediaQuery.size.width * 0.6;
     return AlertDialog(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -105,8 +108,8 @@ class ProcessOutputDialog extends StatelessWidget {
         ],
       ),
       content: SizedBox(
-        height: 300,
-        width: 500,
+        height: maxHeight,
+        width: maxWidth,
         child: Scrollbar(
           controller: controller,
           child: ListView.builder(
