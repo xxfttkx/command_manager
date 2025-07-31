@@ -115,11 +115,11 @@ class MyApp extends StatelessWidget {
         title: 'command_manager',
         theme: ThemeData(
           useMaterial3: true,
-          fontFamily: 'NotoSansSC',
           colorScheme: ColorScheme.fromSeed(seedColor: settingsViewModel.color
               // ??const Color.fromARGB(255, 21, 255, 25),
               ),
           textTheme: Theme.of(context).textTheme.apply(
+                fontFamily: 'NotoSansSC',
                 fontSizeFactor: settingsViewModel.fontSizeFactor, // 缩放字体大小
               ),
         ),
