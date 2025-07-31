@@ -145,19 +145,22 @@ class CommandManagerViewModel extends ChangeNotifier {
       notifyListeners();
 
       final stdoutSub = process.stdout
-          .transform(StreamTransformer.fromHandlers(handleData: (data, sink) {
-        sink.add(utf8.decode(data, allowMalformed: true));
-      })).listen((line) {
-        final output = processString('$line');
-        if (output.isEmpty) return;
-        rc.lines.add(output);
-        rc.count++;
-        if (rc.lines.length <= 5) {
-          notifyListeners();
-        }
-      }, onError: (e) {
-        print("Error decoding process output: $e");
-      });
+          .transform(StreamTransformer<List<int>, String>.fromHandlers(
+              handleData: (data, sink) {
+            sink.add(utf8.decode(data, allowMalformed: true));
+          }))
+          .transform(const LineSplitter()) // 自动按行切
+          .listen((line) {
+            final output = processString(line);
+            if (output.isEmpty) return;
+            rc.lines.add(output);
+            rc.count++;
+            if (rc.lines.length <= 5) {
+              notifyListeners();
+            }
+          }, onError: (e) {
+            print("Error decoding process output: $e");
+          });
 
       final stderrSub = process.stderr
           .transform(StreamTransformer.fromHandlers(handleData: (data, sink) {
