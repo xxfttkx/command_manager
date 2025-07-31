@@ -1,9 +1,9 @@
 import 'package:command_manager/gen/l10n/app_localizations.dart';
 import 'package:command_manager/models/running_command.dart';
+import 'package:command_manager/utils.dart' as utils;
 import 'package:command_manager/viewmodels/command_manager_viewmodel.dart';
 import 'package:command_manager/widgets/app_snackbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 enum ExecutionType { running, finished }
@@ -82,7 +82,7 @@ class ProcessOutputDialog extends StatelessWidget {
     required this.lines,
   });
 
-  String get _cleanedText => lines.where((line) => line.isNotEmpty).join('');
+  String get _cleanedText => lines.where((line) => line.isNotEmpty).join('\n');
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +98,7 @@ class ProcessOutputDialog extends StatelessWidget {
             icon: const Icon(Icons.copy),
             tooltip: 'Copy',
             onPressed: () {
-              Clipboard.setData(ClipboardData(text: _cleanedText));
+              utils.copyToClipboard(_cleanedText);
               AppSnackbar.show(context, 'Copied to clipboard');
             },
           ),
