@@ -116,9 +116,16 @@ class ProcessOutputDialog extends StatelessWidget {
             controller: controller,
             physics: const ClampingScrollPhysics(),
             itemCount: lines.length,
+            // addAutomaticKeepAlives: false,
+            // addRepaintBoundaries: false, // 也可以设为 false 避免 GPU 分片
+            itemExtent: 30, // 如果每项高度固定，建议加这个，极大提升性能
             itemBuilder: (context, index) {
               final line = lines[index];
-              return Text(line);
+              return Text(
+                line,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              );
             },
           ),
         ),
