@@ -118,7 +118,12 @@ class ProcessOutputDialog extends StatelessWidget {
             itemCount: lines.length,
             // addAutomaticKeepAlives: false,
             // addRepaintBoundaries: false, // 也可以设为 false 避免 GPU 分片
-            itemExtent: 30, // 如果每项高度固定，建议加这个，极大提升性能
+            // itemExtent: 30, // 如果每项高度固定，建议加这个，极大提升性能
+            prototypeItem: const Text(
+              'Sample line for prototype',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
             itemBuilder: (context, index) {
               final line = lines[index];
               return Text(
