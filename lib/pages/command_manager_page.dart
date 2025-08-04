@@ -18,11 +18,12 @@ class CommandManagerPage extends StatefulWidget {
 
 class _CommandManagerPageState extends State<CommandManagerPage> {
   late final ScrollController _scrollController;
-
+  late final TextEditingController _filterController;
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
+    _filterController = TextEditingController();
     // 初次加载配置
     Future.microtask(() {
       context.read<CommandManagerViewModel>().loadCommands();
@@ -86,9 +87,20 @@ class _CommandManagerPageState extends State<CommandManagerPage> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
+              controller: _filterController,
+              autofocus: true,
               decoration: InputDecoration(
                 hintText: AppLocalizations.of(context)!.searchCommand,
                 prefixIcon: Icon(Icons.search),
+                suffixIcon: vm.filter.isNotEmpty
+                    ? IconButton(
+                        icon: Icon(Icons.clear),
+                        onPressed: () {
+                          _filterController.clear();
+                          vm.setFilter('');
+                        },
+                      )
+                    : null,
                 border: OutlineInputBorder(),
               ),
               onChanged: vm.setFilter,
