@@ -21,27 +21,50 @@ class ProcessOutputDialog extends StatefulWidget {
 }
 
 class _ProcessOutputDialogState extends State<ProcessOutputDialog> {
-  String get _cleanedText =>
-      widget.lines.where((line) => line.isNotEmpty).join('\n');
+  String get _cleanedText => lines.where((line) => line.isNotEmpty).join('\n');
 
   bool useViewModel = false;
+  List<String> lines = [];
+  final controller = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+
+    // 等一帧，让 ListView 渲染完成后再滚动
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   if (controller.hasClients) {
+    //     controller.jumpTo(controller.position.maxScrollExtent);
+    //     // 如果想要平滑滚动，可以用：
+    //     // controller.animateTo(
+    //     //   controller.position.maxScrollExtent,
+    //     //   duration: const Duration(milliseconds: 300),
+    //     //   curve: Curves.easeOut,
+    //     // );
+    //   }
+    // });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose(); // ✅ 释放资源
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final controller = ScrollController();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (controller.hasClients) {
+        controller.jumpTo(controller.position.maxScrollExtent);
+      }
+    });
     final mediaQuery = MediaQuery.of(context);
     final maxHeight = mediaQuery.size.height * 0.6;
     final maxWidth = mediaQuery.size.width * 0.6;
     final title = widget.title;
-
-    var lines = widget.lines;
-    if (useViewModel) {
-      final vm = context.watch<CommandManagerViewModel>();
-      final rc = vm.getRunningCommandByPid(widget.pid);
-      if (rc != null) {
-        lines = List.of(rc.lines);
-      }
-    }
+    final vm = context.watch<CommandManagerViewModel>();
+    lines = useViewModel
+        ? (vm.getRunningCommandByPid(widget.pid)?.lines ?? [])
+        : widget.lines;
     return AlertDialog(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

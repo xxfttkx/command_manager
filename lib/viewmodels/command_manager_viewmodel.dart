@@ -155,9 +155,7 @@ class CommandManagerViewModel extends ChangeNotifier {
             if (output.isEmpty) return;
             rc.lines.add(output);
             rc.count++;
-            if (rc.lines.length <= 5) {
-              notifyListeners();
-            }
+            notifyListeners();
           }, onError: (e) {
             print("Error decoding process output: $e");
           });
