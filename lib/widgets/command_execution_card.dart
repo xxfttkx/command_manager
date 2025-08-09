@@ -27,6 +27,7 @@ class CommandExecutionCard extends StatelessWidget {
           builder: (_) => ProcessOutputDialog(
             title: rc.name,
             lines: rc.lines,
+            pid: rc.pid,
           ),
         );
       },

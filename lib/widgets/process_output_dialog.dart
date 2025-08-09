@@ -1,18 +1,30 @@
+import 'package:command_manager/gen/l10n/app_localizations.dart';
 import 'package:command_manager/utils.dart' as utils;
+import 'package:command_manager/viewmodels/command_manager_viewmodel.dart';
 import 'package:command_manager/widgets/app_snackbar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ProcessOutputDialog extends StatelessWidget {
+class ProcessOutputDialog extends StatefulWidget {
   final String title;
   final List<String> lines;
-
-  const ProcessOutputDialog({
+  final int pid;
+  ProcessOutputDialog({
     super.key,
     required this.title,
     required this.lines,
+    required this.pid,
   });
 
-  String get _cleanedText => lines.where((line) => line.isNotEmpty).join('\n');
+  @override
+  State<ProcessOutputDialog> createState() => _ProcessOutputDialogState();
+}
+
+class _ProcessOutputDialogState extends State<ProcessOutputDialog> {
+  String get _cleanedText =>
+      widget.lines.where((line) => line.isNotEmpty).join('\n');
+
+  bool useViewModel = false;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +32,16 @@ class ProcessOutputDialog extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
     final maxHeight = mediaQuery.size.height * 0.6;
     final maxWidth = mediaQuery.size.width * 0.6;
+    final title = widget.title;
+
+    var lines = widget.lines;
+    if (useViewModel) {
+      final vm = context.watch<CommandManagerViewModel>();
+      final rc = vm.getRunningCommandByPid(widget.pid);
+      if (rc != null) {
+        lines = List.of(rc.lines);
+      }
+    }
     return AlertDialog(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -27,6 +49,19 @@ class ProcessOutputDialog extends StatelessWidget {
           Expanded(
             child: Text(title, overflow: TextOverflow.ellipsis),
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(AppLocalizations.of(context)!.logRealtimeOutput),
+              Switch(
+                value: useViewModel,
+                onChanged: (value) {
+                  setState(() => useViewModel = value);
+                },
+              ),
+            ],
+          ),
+          SizedBox(width: 8),
           IconButton(
             icon: const Icon(Icons.copy),
             tooltip: 'Copy',

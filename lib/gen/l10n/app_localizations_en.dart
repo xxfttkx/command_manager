@@ -157,4 +157,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fontSizeFactorLabel => 'Font size factor';
+
+  @override
+  String get logRealtimeOutput => 'Live Output';
 }

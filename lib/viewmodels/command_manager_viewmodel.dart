@@ -221,4 +221,11 @@ class CommandManagerViewModel extends ChangeNotifier {
         commands: List<String>.from(commandAction.commands));
     addCommand(newComand);
   }
+
+  RunningCommand? getRunningCommandByPid(int pid) {
+    for (final rc in _running) {
+      if (rc.pid == pid) return rc;
+    }
+    return null;
+  }
 }

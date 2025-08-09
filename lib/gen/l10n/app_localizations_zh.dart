@@ -155,4 +155,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get fontSizeFactorLabel => '字体缩放比例';
+
+  @override
+  String get logRealtimeOutput => '实时输出';
 }

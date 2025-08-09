@@ -373,6 +373,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Font size factor'**
   String get fontSizeFactorLabel;
+
+  /// No description provided for @logRealtimeOutput.
+  ///
+  /// In en, this message translates to:
+  /// **'Live Output'**
+  String get logRealtimeOutput;
 }
 
 class _AppLocalizationsDelegate

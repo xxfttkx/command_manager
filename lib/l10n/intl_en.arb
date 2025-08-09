@@ -90,5 +90,6 @@
   "runCommandOnTop": "Move command to top after running",
   "isAdmin": "Run as Administrator",
   "adminSwitchNotSupported":"Switching administrator privileges is not supported",
-  "fontSizeFactorLabel": "Font size factor"
+  "fontSizeFactorLabel": "Font size factor",
+  "logRealtimeOutput": "Live Output"
 }
