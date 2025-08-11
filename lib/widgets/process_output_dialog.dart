@@ -1,4 +1,5 @@
 import 'package:command_manager/gen/l10n/app_localizations.dart';
+import 'package:command_manager/models/running_command.dart';
 import 'package:command_manager/utils.dart' as utils;
 import 'package:command_manager/viewmodels/command_manager_viewmodel.dart';
 import 'package:command_manager/widgets/app_snackbar.dart';
@@ -9,11 +10,13 @@ class ProcessOutputDialog extends StatefulWidget {
   final String title;
   final List<String> lines;
   final int pid;
+  final ExecutionType type;
   ProcessOutputDialog({
     super.key,
     required this.title,
     required this.lines,
     required this.pid,
+    required this.type,
   });
 
   @override
@@ -29,19 +32,6 @@ class _ProcessOutputDialogState extends State<ProcessOutputDialog> {
   @override
   void initState() {
     super.initState();
-
-    // 等一帧，让 ListView 渲染完成后再滚动
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   if (controller.hasClients) {
-    //     controller.jumpTo(controller.position.maxScrollExtent);
-    //     // 如果想要平滑滚动，可以用：
-    //     // controller.animateTo(
-    //     //   controller.position.maxScrollExtent,
-    //     //   duration: const Duration(milliseconds: 300),
-    //     //   curve: Curves.easeOut,
-    //     // );
-    //   }
-    // });
   }
 
   @override
@@ -72,18 +62,20 @@ class _ProcessOutputDialogState extends State<ProcessOutputDialog> {
           Expanded(
             child: Text(title, overflow: TextOverflow.ellipsis),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(AppLocalizations.of(context)!.logRealtimeOutput),
-              Switch(
-                value: useViewModel,
-                onChanged: (value) {
-                  setState(() => useViewModel = value);
-                },
-              ),
-            ],
-          ),
+          widget.type == ExecutionType.running
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(AppLocalizations.of(context)!.logRealtimeOutput),
+                    Switch(
+                      value: useViewModel,
+                      onChanged: (value) {
+                        setState(() => useViewModel = value);
+                      },
+                    ),
+                  ],
+                )
+              : const SizedBox.shrink(),
           SizedBox(width: 8),
           IconButton(
             icon: const Icon(Icons.copy),

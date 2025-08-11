@@ -6,8 +6,6 @@ import 'package:command_manager/widgets/process_output_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-enum ExecutionType { running, finished }
-
 class CommandExecutionCard extends StatelessWidget {
   final RunningCommand rc;
   final ExecutionType type;
@@ -28,6 +26,7 @@ class CommandExecutionCard extends StatelessWidget {
             title: rc.name,
             lines: rc.lines,
             pid: rc.pid,
+            type: type,
           ),
         );
       },
