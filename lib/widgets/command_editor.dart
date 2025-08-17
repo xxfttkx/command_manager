@@ -52,7 +52,7 @@ class _CommandEditorState extends State<CommandEditor> {
         .toList();
 
     if (name.isEmpty || commands.isEmpty) {
-      AppSnackbar.show(
+      AppSnackbar.showError(
         context,
         AppLocalizations.of(context)!.nameAndCommandsRequired,
       );
