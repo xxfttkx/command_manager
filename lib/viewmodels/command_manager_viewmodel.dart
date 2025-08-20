@@ -226,4 +226,21 @@ class CommandManagerViewModel extends ChangeNotifier {
     }
     return null;
   }
+
+  RunningCommand? getRunningCommandByPidAndType(int pid, ExecutionType type) {
+    switch (type) {
+      case ExecutionType.running:
+        for (final rc in _running) {
+          if (rc.pid == pid) return rc;
+        }
+        return null;
+      case ExecutionType.finished:
+        for (final rc in _finishedCommands) {
+          if (rc.pid == pid) return rc;
+        }
+        return null;
+      default:
+        return null;
+    }
+  }
 }

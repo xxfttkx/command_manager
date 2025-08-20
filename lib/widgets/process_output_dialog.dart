@@ -7,14 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProcessOutputDialog extends StatefulWidget {
-  final String title;
-  final List<String> lines;
   final int pid;
   final ExecutionType type;
   ProcessOutputDialog({
     super.key,
-    required this.title,
-    required this.lines,
     required this.pid,
     required this.type,
   });
@@ -24,13 +20,17 @@ class ProcessOutputDialog extends StatefulWidget {
 }
 
 class _ProcessOutputDialogState extends State<ProcessOutputDialog> {
-  String get _cleanedText => lines.where((line) => line.isNotEmpty).join('\n');
-
+  String get _cleanedText =>
+      rc?.lines.where((line) => line.isNotEmpty).join('\n') ?? '';
   bool useViewModel = false;
-  List<String> lines = [];
   final controller = ScrollController();
+  int rowNum = 0;
+  late RunningCommand? rc;
   @override
   void initState() {
+    final vm = context.read<CommandManagerViewModel>();
+    rc = vm.getRunningCommandByPidAndType(widget.pid, widget.type);
+    rowNum = rc?.lines.length ?? 0;
     super.initState();
   }
 
@@ -50,11 +50,13 @@ class _ProcessOutputDialogState extends State<ProcessOutputDialog> {
     final mediaQuery = MediaQuery.of(context);
     final maxHeight = mediaQuery.size.height * 0.6;
     final maxWidth = mediaQuery.size.width * 0.6;
-    final title = widget.title;
     final vm = context.watch<CommandManagerViewModel>();
-    lines = useViewModel
-        ? (vm.getRunningCommandByPid(widget.pid)?.lines ?? [])
-        : widget.lines;
+    final title = rc?.name ?? '';
+    if (useViewModel) {
+      rc = vm.getRunningCommandByPidAndType(widget.pid, widget.type);
+      // 如果是实时模式，行数不限制
+      rowNum = rc?.lines.length ?? 0;
+    }
     return AlertDialog(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -70,6 +72,9 @@ class _ProcessOutputDialogState extends State<ProcessOutputDialog> {
                     Switch(
                       value: useViewModel,
                       onChanged: (value) {
+                        if (!value) {
+                          rowNum = rc?.lines.length ?? 0; // 切换到非实时模式时，重置行数
+                        }
                         setState(() => useViewModel = value);
                       },
                     ),
@@ -95,7 +100,7 @@ class _ProcessOutputDialogState extends State<ProcessOutputDialog> {
           child: ListView.builder(
             controller: controller,
             physics: const ClampingScrollPhysics(),
-            itemCount: lines.length,
+            itemCount: rowNum,
             // addAutomaticKeepAlives: false,
             // addRepaintBoundaries: false, // 也可以设为 false 避免 GPU 分片
             // itemExtent: 30, // 如果每项高度固定，建议加这个，极大提升性能
@@ -105,7 +110,7 @@ class _ProcessOutputDialogState extends State<ProcessOutputDialog> {
               overflow: TextOverflow.ellipsis,
             ),
             itemBuilder: (context, index) {
-              final line = lines[index];
+              final line = rc?.lines[index] ?? '';
               return Text(
                 line,
                 maxLines: 1,
