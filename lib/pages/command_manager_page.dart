@@ -184,7 +184,23 @@ class _CommandManagerPageState extends State<CommandManagerPage> {
                                     action.commands.join('\n'));
                                 break;
                               case CommandCardActionType.duplicate:
-                                vm.duplicateCommand(action);
+                                switch (vm.duplicateCommand(action)) {
+                                  case AddCommandResult.success:
+                                    AppSnackbar.show(
+                                        context,
+                                        AppLocalizations.of(context)!
+                                            .saveSuccessMessage(action.name));
+                                    break;
+                                  case AddCommandResult.duplicate:
+                                    AppSnackbar.showError(
+                                        context,
+                                        AppLocalizations.of(context)!
+                                            .duplicateCommandMessage(
+                                                action.name));
+                                    break;
+                                  default:
+                                    break;
+                                }
                                 break;
                               // 其他 case...
                             }

@@ -212,12 +212,12 @@ class CommandManagerViewModel extends ChangeNotifier {
     return s.replaceAll(RegExp(r'\x1B\[[0-9;]*[a-zA-Z]'), '').trim();
   }
 
-  void duplicateCommand(CommandAction commandAction) {
+  AddCommandResult duplicateCommand(CommandAction commandAction) {
     final newComand = CommandAction(
         name: "${commandAction.name} copy",
         description: commandAction.description,
         commands: List<String>.from(commandAction.commands));
-    addCommand(newComand);
+    return addCommand(newComand);
   }
 
   RunningCommand? getRunningCommandByPid(int pid) {
