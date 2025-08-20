@@ -22,7 +22,7 @@ class ProcessOutputDialog extends StatefulWidget {
 class _ProcessOutputDialogState extends State<ProcessOutputDialog> {
   String get _cleanedText =>
       rc?.lines.where((line) => line.isNotEmpty).join('\n') ?? '';
-  bool useViewModel = false;
+  bool isLiveOutput = false;
   final controller = ScrollController();
   int rowNum = 0;
   late RunningCommand? rc;
@@ -52,7 +52,7 @@ class _ProcessOutputDialogState extends State<ProcessOutputDialog> {
     final maxWidth = mediaQuery.size.width * 0.6;
     final vm = context.watch<CommandManagerViewModel>();
     final title = rc?.name ?? '';
-    if (useViewModel) {
+    if (isLiveOutput) {
       rc = vm.getRunningCommandByPidAndType(widget.pid, widget.type);
       // 如果是实时模式，行数不限制
       rowNum = rc?.lines.length ?? 0;
@@ -70,12 +70,12 @@ class _ProcessOutputDialogState extends State<ProcessOutputDialog> {
                   children: [
                     Text(AppLocalizations.of(context)!.logRealtimeOutput),
                     Switch(
-                      value: useViewModel,
+                      value: isLiveOutput,
                       onChanged: (value) {
                         if (!value) {
                           rowNum = rc?.lines.length ?? 0; // 切换到非实时模式时，重置行数
                         }
-                        setState(() => useViewModel = value);
+                        setState(() => isLiveOutput = value);
                       },
                     ),
                   ],
