@@ -42,17 +42,17 @@ class _ProcessOutputDialogState extends State<ProcessOutputDialog> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (controller.hasClients) {
-        controller.jumpTo(controller.position.maxScrollExtent);
-      }
-    });
     final mediaQuery = MediaQuery.of(context);
     final maxHeight = mediaQuery.size.height * 0.6;
     final maxWidth = mediaQuery.size.width * 0.6;
     final vm = context.watch<CommandManagerViewModel>();
     final title = rc?.name ?? '';
     if (isLiveOutput) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (controller.hasClients) {
+          controller.jumpTo(controller.position.maxScrollExtent);
+        }
+      });
       rc = vm.getRunningCommandByPidAndType(widget.pid, widget.type);
       // 如果是实时模式，行数不限制
       rowNum = rc?.lines.length ?? 0;
