@@ -161,4 +161,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get defaultLiveOutputEnabled => '默认启用实时输出';
+
+  @override
+  String get restart => '重新启动';
 }

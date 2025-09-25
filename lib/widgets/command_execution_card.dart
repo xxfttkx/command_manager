@@ -46,12 +46,36 @@ class CommandExecutionCard extends StatelessWidget {
             ],
           ),
           trailing: type == ExecutionType.running
-              ? IconButton(
-                  icon: const Icon(Icons.stop_circle, color: Colors.red),
-                  tooltip: AppLocalizations.of(context)!.terminateProcess,
-                  onPressed: () {
-                    vm.killProcess(rc.pid);
-                  })
+              ? Row(
+                  mainAxisSize: MainAxisSize.min, // 避免撑满整行
+                  children: [
+                      IconButton(
+                          icon: const Icon(Icons.restart_alt_rounded,
+                              color: Colors.green),
+                          tooltip: AppLocalizations.of(context)!.restart,
+                          onPressed: () async {
+                            vm.killProcess(rc.pid);
+                            AppSnackbar.show(
+                                context,
+                                AppLocalizations.of(context)!
+                                    .startCommand(rc.name));
+                            await vm.runCommandByName(rc.name);
+                            if (context.mounted) {
+                              AppSnackbar.show(
+                                  context,
+                                  AppLocalizations.of(context)!
+                                      .endCommand(rc.name));
+                            }
+                          }),
+                      IconButton(
+                          icon:
+                              const Icon(Icons.stop_circle, color: Colors.red),
+                          tooltip:
+                              AppLocalizations.of(context)!.terminateProcess,
+                          onPressed: () {
+                            vm.killProcess(rc.pid);
+                          }),
+                    ])
               : IconButton(
                   icon: const Icon(Icons.play_arrow),
                   tooltip: AppLocalizations.of(context)!.run,

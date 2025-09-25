@@ -163,4 +163,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get defaultLiveOutputEnabled => 'Enable live output by default';
+
+  @override
+  String get restart => 'Restart';
 }

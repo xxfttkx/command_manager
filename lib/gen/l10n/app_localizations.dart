@@ -385,6 +385,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enable live output by default'**
   String get defaultLiveOutputEnabled;
+
+  /// No description provided for @restart.
+  ///
+  /// In en, this message translates to:
+  /// **'Restart'**
+  String get restart;
 }
 
 class _AppLocalizationsDelegate
