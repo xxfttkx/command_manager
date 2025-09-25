@@ -79,6 +79,14 @@ class _SettingsPageState extends State<SettingsPage> {
                   onChanged: (val) => settingsViewModel.setRunCommandOnTop(val),
                   contentPadding: EdgeInsets.zero,
                 ),
+                SwitchListTile(
+                  title: Text(
+                      AppLocalizations.of(context)!.defaultLiveOutputEnabled),
+                  value: settingsViewModel.defaultLiveOutputEnabled,
+                  onChanged: (val) =>
+                      settingsViewModel.setDefaultLiveOutputEnabled(val),
+                  contentPadding: EdgeInsets.zero,
+                ),
                 fontSizeFactorSlider(
                   context: context,
                   fontSizeFactor: settingsViewModel.fontSizeFactor,

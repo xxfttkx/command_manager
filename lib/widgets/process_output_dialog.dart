@@ -2,6 +2,7 @@ import 'package:command_manager/gen/l10n/app_localizations.dart';
 import 'package:command_manager/models/running_command.dart';
 import 'package:command_manager/utils.dart' as utils;
 import 'package:command_manager/viewmodels/command_manager_viewmodel.dart';
+import 'package:command_manager/viewmodels/settings_viewmodel.dart';
 import 'package:command_manager/widgets/app_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,8 @@ class _ProcessOutputDialogState extends State<ProcessOutputDialog> {
   late RunningCommand? rc;
   @override
   void initState() {
+    final settingsViewModel = context.read<SettingsViewModel>();
+    isLiveOutput = settingsViewModel.defaultLiveOutputEnabled;
     final vm = context.read<CommandManagerViewModel>();
     rc = vm.getRunningCommandByPidAndType(widget.pid, widget.type);
     rowNum = rc?.lines.length ?? 0;

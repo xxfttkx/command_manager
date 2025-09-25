@@ -91,5 +91,6 @@
   "isAdmin": "Run as Administrator",
   "adminSwitchNotSupported":"Switching administrator privileges is not supported",
   "fontSizeFactorLabel": "Font size factor",
-  "logRealtimeOutput": "Live Output"
+  "logRealtimeOutput": "Live Output",
+  "defaultLiveOutputEnabled": "Enable live output by default"
 }

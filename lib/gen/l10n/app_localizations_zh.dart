@@ -158,4 +158,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get logRealtimeOutput => '实时输出';
+
+  @override
+  String get defaultLiveOutputEnabled => '默认启用实时输出';
 }

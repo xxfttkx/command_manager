@@ -379,6 +379,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Live Output'**
   String get logRealtimeOutput;
+
+  /// No description provided for @defaultLiveOutputEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable live output by default'**
+  String get defaultLiveOutputEnabled;
 }
 
 class _AppLocalizationsDelegate

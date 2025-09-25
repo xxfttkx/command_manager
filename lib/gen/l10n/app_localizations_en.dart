@@ -160,4 +160,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get logRealtimeOutput => 'Live Output';
+
+  @override
+  String get defaultLiveOutputEnabled => 'Enable live output by default';
 }

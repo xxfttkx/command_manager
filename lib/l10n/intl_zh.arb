@@ -48,5 +48,6 @@
   "isAdmin": "管理员权限",
   "adminSwitchNotSupported": "不支持切换管理员权限",
   "fontSizeFactorLabel": "字体缩放比例",
-  "logRealtimeOutput": "实时输出"
+  "logRealtimeOutput": "实时输出",
+  "defaultLiveOutputEnabled": "默认启用实时输出"
 }
